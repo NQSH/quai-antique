@@ -1,4 +1,22 @@
-:root {}
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Galada&display=swap');
+
+:root {
+  --color-primary: #DCC48E;
+  --color-secondary: #B3C0A4;
+  --color-secondary-light: #EAEFD3;
+  --color-tertiary: #27233A;
+  --color-tertiary-light: #505168;
+  --color-white: #fff;
+  --color-danger: #D32A2A;
+
+  --font-family-primary: "Zen Antique", serif;
+  --font-family-secondary: 'galada', cursive;
+
+  --font-size-header: 30px;
+  --font-size-title: 24px;
+  --font-size-content: 14px;
+}
 
 *,
 *::before,
@@ -10,4 +28,6 @@
 
 body {
   min-height: 100vh;
+  font-family: "Zen Antique", serif;
+  font-size: 14px;
 }
