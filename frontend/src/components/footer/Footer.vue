@@ -104,4 +104,10 @@ td {
     text-align: left;
     padding-left: 30px;
 }
+
+@media (max-width: 992px) {
+    footer {
+        flex-direction: column;
+    }
+}
 </style>
