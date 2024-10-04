@@ -9,19 +9,23 @@ import NotFound from '@/components/pages/NotFound.vue';
 const routes = [
     {
         path: '/',
-        component: Home
+        component: Home,
+        title: 'Accueil'
     },
     {
         path: '/menus',
-        component: Menus
+        component: Menus,
+        title: 'Menus'
     },
     {
         path: '/gallery',
-        component: Gallery
+        component: Gallery,
+        title: 'Galerie'
     },
     {
         path: '/booking',
-        component: Booking
+        component: Booking,
+        title: 'Réservation'
     }
 ]
 
@@ -35,9 +39,9 @@ onMounted(() => window.addEventListener('hashchange', update));
 onUnmounted(() => window.removeEventListener('hashchange', update));
 
 const currentView = computed(() => {
-
     for (const route of routes) {
-        if (route.path == currentPath.value.slice(1)) return route.component;
+        const path = currentPath.value.slice(1) || '/';
+        if (route.path === path) return route.component;
     }
 
     return NotFound;
