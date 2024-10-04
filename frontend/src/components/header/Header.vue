@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import IconAccount from './Icon-account.vue';
-import IconBurger from './Icon-burger.vue';
+import IconAccount from './IconAccount.vue';
+import IconBurger from './IconBurger.vue';
 
 const showAccountNav = ref(false);
 const showMainNav = ref(false);
@@ -34,18 +34,18 @@ function switchMainNavDisplay() {
 
 <template>
 <header>
-    <a href="/" class="brand text-title">Quai Antique</a>
+    <a href="#/" class="brand text-title">Quai Antique</a>
     <IconBurger class="icon icon-burger" @click="switchMainNavDisplay"/>
     <nav :class="mainNavStyle">
-        <a href="/">Accueil</a>
-        <a href="/gallery">Galerie</a>
-        <a href="/menus">Menus</a>
-        <a href="/booking">Réserver</a>
+        <a href="#/">Accueil</a>
+        <a href="#/gallery">Galerie</a>
+        <a href="#/menus">Menus</a>
+        <a href="#/booking">Réserver</a>
     </nav>
     <IconAccount class="icon icon-account" @click="switchAccountNavDisplay"/>
     <nav :class="accountNavStyle">
-        <a href="/signin">Devenir client</a>
-        <a href="/login">Se connecter</a>
+        <a href="#/signin">Devenir client</a>
+        <a href="#/login">Se connecter</a>
     </nav>
 </header>
 </template>
