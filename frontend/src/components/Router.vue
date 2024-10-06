@@ -41,9 +41,13 @@ onUnmounted(() => window.removeEventListener('hashchange', update));
 const currentView = computed(() => {
     for (const route of routes) {
         const path = currentPath.value.slice(1) || '/';
-        if (route.path === path) return route.component;
-    }
 
+        if (route.path === path) {
+            document.title = route.title + ' - Quai Antique';
+            return route.component;
+        }
+    }
+    document.title = 'Page non trouvée - Quai Antique';
     return NotFound;
 })
 </script>
