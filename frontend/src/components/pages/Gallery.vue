@@ -79,6 +79,10 @@ function onEmitHide(): void {
     showModal.value = false;
 }
 
+function onCtaClick(): void {
+    window.location.href = '#/booking';
+}
+
 const isScrolled = computed(() => {
     if(scrollIndex.value) {
         return scrollIndex.value > 0;
@@ -126,7 +130,7 @@ const isMaxScrolled = computed(() => {
         </div>
     </PageContent>
     <div id="button-cta">
-        <ButtonDefault label="Réserver une table"/>
+        <ButtonDefault label="Réserver une table" @onClick="onCtaClick"/>
     </div>
     <Modal :show="showModal" @hide="onEmitHide">
         <ModalImage :path="modalImage.path" :title="modalImage.title"/>
@@ -314,6 +318,10 @@ const isMaxScrolled = computed(() => {
                 }
             }
         }
+    }
+
+    #scroll-buttons {
+        display: none;
     }
 }
 
