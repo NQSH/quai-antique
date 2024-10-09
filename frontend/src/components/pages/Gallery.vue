@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch, type Ref } from 'vue';
+import { computed, ref, useTemplateRef } from 'vue';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
 import Icon from './gallery/Icon.vue';
@@ -7,6 +7,8 @@ import IconDesktop from './gallery/icons/IconDesktop.vue';
 import IconMobileRegular from './gallery/icons/IconMobile.vue';
 import IconSwitch from './gallery/icons/IconSwitch.vue';
 import ButtonDefault from '../inputs/ButtonDefault.vue';
+import Modal from '../Modal.vue';
+import ModalImage from './gallery/ModalImage.vue';
 
 const images = [
     {
@@ -45,6 +47,12 @@ const images = [
 
 const isSwitched = ref(false);
 
+const showModal = ref(false);
+const modalImage = ref({
+    path: '',
+    title: ''
+})
+
 const galleryElement = useTemplateRef('gallery-element');
 
 const scrollIndex = ref(0);
@@ -59,6 +67,16 @@ function onScrollBtnClick(direction: number): void {
 
 function onSwitchClick(value: boolean) : void {
     isSwitched.value = value;
+}
+
+function onImageClick(path: string, title: string): void {
+    modalImage.value.path = path;
+    modalImage.value.title = title;
+    showModal.value = true;
+}
+
+function onEmitHide(): void {
+    showModal.value = false;
 }
 
 const isScrolled = computed(() => {
@@ -88,7 +106,7 @@ const isMaxScrolled = computed(() => {
         </div>
         <div id="gallery">
             <div id="gallery-images" @scroll="onScroll" ref="gallery-element" :data-switched="isSwitched" :data-scrolled="isScrolled" :data-max-scrolled="isMaxScrolled">
-                <div class="image-container" v-for="image in images">
+                <div class="image-container" v-for="image in images" @click="onImageClick(image.path, image. title)">
                     <img :src="'/' + image.path" :alt="image.title">
                     <span>{{ image.title.slice(0, 1).toUpperCase() + image.title.slice(1) }}</span>
                 </div>
@@ -110,6 +128,9 @@ const isMaxScrolled = computed(() => {
     <div id="button-cta">
         <ButtonDefault label="Réserver une table"/>
     </div>
+    <Modal :show="showModal" @hide="onEmitHide">
+        <ModalImage :path="modalImage.path" :title="modalImage.title"/>
+    </Modal>
 </template>
 
 <style lang="css" scoped>
