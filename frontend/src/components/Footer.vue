@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import IconEmail from './IconEmail.vue';
-import IconPhone from './IconPhone.vue';
+import IconEmail from './footer/IconEmail.vue';
+import IconPhone from './footer/IconPhone.vue';
+
 
 enum daysOfWeek {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
 

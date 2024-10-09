@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import IconAccount from './IconAccount.vue';
-import IconBurger from './IconBurger.vue';
+import IconBurger from './header/IconBurger.vue';
+import IconAccount from './header/IconAccount.vue';
 
 const showAccountNav = ref(false);
 const showMainNav = ref(false);
