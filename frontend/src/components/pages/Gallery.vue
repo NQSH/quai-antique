@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, useTemplateRef, type Ref } from 'vue';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
 import Icon from './gallery/Icon.vue';
@@ -9,41 +9,9 @@ import IconSwitch from './gallery/icons/IconSwitch.vue';
 import ButtonDefault from '../inputs/ButtonDefault.vue';
 import Modal from '../Modal.vue';
 import ModalImage from './gallery/ModalImage.vue';
+import { useGallery } from '@/composables/useGallery';
 
-const images = [
-    {
-        path: "img-meal-diner.png",
-        title: "lorem ipsum dolor"
-    },
-    {
-        path: "img-meal-lunch.png",
-        title: "consectetur adipisicing elit"
-    },
-    {
-        path: "img-savoie-first.png",
-        title: "praesentium quisquam aliquam magnam"
-    },
-    {
-        path: "img-savoie-second.png",
-        title: "veniam consectetur sed facilis"
-    },
-    {
-        path: "img-savoie-third.png",
-        title: "mollitia odio quis"
-    },
-    {
-        path: "img-food-1.png",
-        title: "incidunt asperiores"
-    },
-    {
-        path: "img-food-2.png",
-        title: "vero modi impedit"
-    },
-    {
-        path: "img-landscape-1.png",
-        title: "porro voluptas"
-    },
-]
+const { images } = useGallery();
 
 const isSwitched = ref(false);
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, provide, ref } from 'vue';
 import Home from '@/components/pages/Home.vue';
 import Menus from '@/components/pages/Menus.vue';
 import Gallery from '@/components/pages/Gallery.vue';
@@ -29,14 +29,20 @@ const routes = [
     }
 ]
 
-const currentPath = ref(window.location.hash);
+const currentPath = ref('');
+const currentRoute = ref('');
 
 function update() {
-    currentPath.value = window.location.hash
+    const hash = window.location.hash;
+    currentPath.value = hash;
+    currentRoute.value = hash.slice(2) || '';
 }
 
-onMounted(() => window.addEventListener('hashchange', update));
-onUnmounted(() => window.removeEventListener('hashchange', update));
+onBeforeMount(() => {
+    window.addEventListener('hashchange', update);
+    update();
+});
+onBeforeUnmount(() => window.removeEventListener('hashchange', update));
 
 const currentView = computed(() => {
     for (const route of routes) {
@@ -50,8 +56,14 @@ const currentView = computed(() => {
     document.title = 'Page non trouvée - Quai Antique';
     return NotFound;
 })
+
+provide('currentRoute', currentRoute);
 </script>
 
 <template>
-    <component :is="currentView" />
+    <slot name="header" />
+    <slot name="main">
+        <component :is="currentView" />
+    </slot>
+    <slot name="footer" />
 </template>

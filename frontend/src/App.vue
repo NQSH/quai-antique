@@ -7,9 +7,13 @@ import Main from './components/Main.vue';
 </script>
 
 <template>
-  <Header />
-  <Main>
-    <Router />
-  </Main>
-  <Footer />
+  <Router>
+    <template #header>
+      <Header />
+    </template>
+    <Main #main/>
+    <template #footer>
+      <Footer />
+    </template>
+  </Router>
 </template>

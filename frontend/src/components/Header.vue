@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import IconBurger from './header/IconBurger.vue';
 import IconAccount from './header/IconAccount.vue';
 
@@ -30,6 +30,8 @@ function switchMainNavDisplay() {
     showMainNav.value = !showMainNav.value;
 }
 
+const route = inject('currentRoute');
+
 </script>
 
 <template>
@@ -37,15 +39,15 @@ function switchMainNavDisplay() {
     <a href="#/" class="brand text-title">Quai Antique</a>
     <IconBurger class="icon icon-burger" @click="switchMainNavDisplay"/>
     <nav :class="mainNavStyle">
-        <a href="#/">Accueil</a>
-        <a href="#/gallery">Galerie</a>
-        <a href="#/menus">Menus</a>
-        <a href="#/booking">Réserver</a>
+        <a :class="route === '' ? 'active' : ''" href="#/">Accueil</a>
+        <a :class="route === 'gallery' ? 'active' : ''" href="#/gallery">Galerie</a>
+        <a :class="route === 'menus' ? 'active' : ''" href="#/menus">Menus</a>
+        <a :class="route === 'booking' ? 'active' : ''" href="#/booking">Réserver</a>
     </nav>
     <IconAccount class="icon icon-account" @click="switchAccountNavDisplay"/>
     <nav :class="accountNavStyle">
-        <a href="#/signin">Devenir client</a>
-        <a href="#/login">Se connecter</a>
+        <a :class="route === 'signin' ? 'active' : ''" href="#/signin">Devenir client</a>
+        <a :class="route === 'login' ? 'active' : ''" href="#/login">Se connecter</a>
     </nav>
 </header>
 </template>
@@ -73,6 +75,10 @@ header {
 
 nav > a {
     color: var(--color-white);
+
+    &.active {
+        border-bottom: 2px solid white;
+    }
 }
 
 .main-nav {
