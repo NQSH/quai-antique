@@ -60,7 +60,7 @@ const isScrolled = computed(() => {
 })
 
 const isMaxScrolled = computed(() => {
-    const maxScrollSize = images.length * 90 + (images.length - 1) * 30 - 768;
+    const maxScrollSize = images.value.length * 90 + (images.value.length - 1) * 30 - 768;
     return scrollIndex.value >= maxScrollSize;
 })
 
@@ -194,9 +194,11 @@ const isMaxScrolled = computed(() => {
         & > .image-container {
             position: relative;
             width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
             
             & > img {
-                border-radius: 10px;
+                display: block;
                 width: 100%;
                 object-fit: cover;
                 transition: filter 200ms;
@@ -276,13 +278,14 @@ const isMaxScrolled = computed(() => {
             & > .image-container {
                 max-width: 30%;
                 height: 150px;
+                border-radius: 5px;
                 overflow: hidden;
 
                 & > img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
-                    border-radius: 5px;
+                    display: block;
                 }
             }
         }

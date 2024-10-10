@@ -15,10 +15,12 @@ const props = defineProps<{
 <style lang="css" scoped>
 .image-container {
     position: relative;
+    height: 100%;
 
     & > img {
         display: block;
         width: 100%;
+        height: 100%;
         object-fit: cover;
     }
     & > span {
