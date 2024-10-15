@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, onBeforeUnmount, provide, ref } from 'vue';
 import Home from '@/components/pages/Home.vue';
-import Menus from '@/components/pages/Menus.vue';
+import Menu from '@/components/pages/Menu.vue';
 import Gallery from '@/components/pages/Gallery.vue';
 import Booking from '@/components/pages/Booking.vue';
 import NotFound from '@/components/pages/NotFound.vue';
@@ -13,9 +13,9 @@ const routes = [
         title: 'Accueil'
     },
     {
-        path: '/menus',
-        component: Menus,
-        title: 'Menus'
+        path: '/menu',
+        component: Menu,
+        title: 'Menu'
     },
     {
         path: '/gallery',

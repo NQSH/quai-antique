@@ -1,7 +1,7 @@
 export default class CustomResponse {
     constructor(
         private _statusOK: boolean,
-        private _data?: object,
+        private _data?: Object | Object[],
         private _message?: string,
 
     ) { }

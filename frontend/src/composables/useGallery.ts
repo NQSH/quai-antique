@@ -2,13 +2,12 @@ import { Services } from "@/services/_services";
 import { onMounted, ref, type Ref } from "vue";
 
 export function useGallery() {
-    const images: Ref<Image[]> = ref([]);
+    const images = ref<Image[]>([]);
 
     onMounted(() => {
         const response = Services.Gallery.get();
         if (response.statusOK) {
-            const data = response.data as Data;
-            images.value = data.images;
+            images.value = response.data as Data;
         }
     })
 
@@ -22,6 +21,4 @@ type Image = {
     title: string
 }
 
-type Data = {
-    images: Image[];
-}
+type Data = Image[]

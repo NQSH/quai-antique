@@ -41,7 +41,7 @@ const route = inject('currentRoute');
     <nav :class="mainNavStyle">
         <a :class="route === '' ? 'active' : ''" href="#/">Accueil</a>
         <a :class="route === 'gallery' ? 'active' : ''" href="#/gallery">Galerie</a>
-        <a :class="route === 'menus' ? 'active' : ''" href="#/menus">Menus</a>
+        <a :class="route === 'menu' ? 'active' : ''" href="#/menu">Menu</a>
         <a :class="route === 'booking' ? 'active' : ''" href="#/booking">Réserver</a>
     </nav>
     <IconAccount class="icon icon-account" @click="switchAccountNavDisplay"/>

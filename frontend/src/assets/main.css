@@ -16,7 +16,7 @@
 }
 
 .text-subtitle {
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-family-primary);
   font-size: var(--font-size-title);
 }
 
