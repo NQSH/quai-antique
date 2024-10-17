@@ -35,7 +35,7 @@ const dinerFormulas = computed(() => {
         </section>
     </div>
     <section class="childmeal-container">
-        <IconChildMeal class="icon" />
+         <img class="icon" src="/img-menu-childmeal.png" alt="icon-maindish">
         <div class="childmeal-details">
             <h2 class="text-title child-title">{{ Helpers.FormatTool.Text.toSentenceCase(menu?.kidMenu.title) }}</h2>
             <p v-for="dish in menu?.kidMenu.details">{{ Helpers.FormatTool.Text.toSentenceCase(dish) }}</p>
@@ -153,8 +153,7 @@ const dinerFormulas = computed(() => {
     text-align: center;
 
     & > .icon {
-        width: 90px;
-        height: 90px;
+        margin-block: 20px;
     }
 }
 

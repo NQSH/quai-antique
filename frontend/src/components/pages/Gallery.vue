@@ -69,7 +69,7 @@ const isMaxScrolled = computed(() => {
 <template>
     <PageContent>
         <TitleContent>
-            <h1>Galerie</h1>
+            Galerie
         </TitleContent>
         <div id="switch-buttons">
             <Icon :isActive="!isSwitched" id="icon-mobile" @click="onSwitchClick(false)"><IconMobileRegular /></Icon>

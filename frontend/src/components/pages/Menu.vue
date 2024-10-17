@@ -8,8 +8,8 @@ import ButtonDefault from '../inputs/ButtonDefault.vue';
 
 const isSwitched = ref(false);
 
-function onTitleClick(): void {
-    isSwitched.value = !isSwitched.value;
+function onTitleClick(value: boolean): void {
+    isSwitched.value = value;
 }
 
 function onCtaClick(): void {
@@ -24,11 +24,9 @@ const currentContent = computed(() => {
 <template>
     <PageContent>
         <TitleContent>
-            <h1 @click="onTitleClick">
-                <span :class="`title ${!isSwitched ? 'active' : ''}`">Nos formules</span>
-                <span class="title-separator"> | </span>
-                <span :class="`title ${isSwitched ? 'active' : ''}`">À la carte</span>
-            </h1>
+            <span :class="`title ${!isSwitched ? 'active' : ''}`" @click="onTitleClick(false)">Nos formules</span>
+            <span class="title-separator"> | </span>
+            <span :class="`title ${isSwitched ? 'active' : ''}`" @click="onTitleClick(true)">À la carte</span>
         </TitleContent>
         <div class="switch-container">
             <div :class="`switch-marker ${!isSwitched ? 'active' : ''}`"></div>
