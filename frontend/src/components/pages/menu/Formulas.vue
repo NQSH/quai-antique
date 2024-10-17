@@ -61,6 +61,8 @@ function onSwitch(value: boolean): void {
     gap: 30px;
     margin-bottom: 30px;
     overflow: hidden;
+
+    --current-tab-color: var(--color-secondary-light);
 }
 
 .category-container {
@@ -184,13 +186,104 @@ function onSwitch(value: boolean): void {
     gap: 10px;
 }
 
-@media (max-width: 768px) {
-    .main-container {
-        --current-tab-color: var(--color-secondary-light);
+.tab-container {
+    display: none;
+    position: absolute;
+    width: 50%;
+    height: 51px;
+    left: 0px;
+    z-index: -1;
+}
 
-        & * {
-            transition: 300ms;
+.tab {
+    position: relative;
+    display: flex;
+    width: 60%;
+    height: 100%;
+    background-color: var(--current-tab-color);
+}
+
+.tab-left {
+    border-radius: 10px 0 0 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 0px;
+        height: 100%;
+        right: 100%;
+        border-radius: 0 0 10px 0;
+        box-shadow: 10px 10px var(--current-tab-color);
+        transition: 300ms;
+    }
+}
+
+.tab-right {
+    top: -100%;
+    left: calc(40%);
+    transform: skew(30deg);
+    border-radius: 0 10px 0 0;
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 100%;
+        left: 100%;
+        border-radius: 0 0 0 10px;
+        box-shadow: -10px 10px var(--current-tab-color);
+        transition: 300ms;
+    }
+}
+
+.main-container.switched {
+    --current-tab-color: var(--color-tertiary);
+        
+    & .tab-container {
+        left: 50%;
+
+        & .tab-left {
+            transform: skew(-30deg);
+            border-radius: 10px 0 0 0;
+
+            &::before {
+                width: 20px;
+            }
         }
+
+        & .tab-right {
+            transform: skew(0deg);
+            border-radius: 0 10px 0 0;
+
+            &::after {
+                width: 0px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+
+    .main-container * {
+        transition: 300ms;
+    }
+    
+    .title-container {
+        width: 50%;
+
+        &.diner {
+            position: relative;
+            left: 100%;
+            transform: translateX(-100%);
+
+            & h2 {
+                color: var(--color-tertiary);
+            }
+        }
+    }
+
+    .tab-container {
+        display: inline;
     }
 
     .formulas-container.lunch,
@@ -212,90 +305,9 @@ function onSwitch(value: boolean): void {
         pointer-events: none;
     }
 
-    .title-container {
-        width: 50%;
-
-        &.diner {
-            position: relative;
-            left: 100%;
-            transform: translateX(-100%);
-        }
-    }
-
-    .tab-container {
-        position: absolute;
-        width: 50%;
-        height: 51px;
-        left: 0px;
-        z-index: -1;
-    }
-
-    .tab {
-        position: relative;
-        display: flex;
-        width: 60%;
-        height: 100%;
-    }
-
-    .tab-left {
-        border-radius: 10px 0 0 0;
-        background-color: var(--current-tab-color);
-
-        &::before {
-            content: "";
-            position: absolute;
-            width: 0px;
-            height: 100%;
-            right: 100%;
-            border-radius: 0 0 10px 0;
-            box-shadow: 10px 10px var(--current-tab-color);
-        }
-    }
-
-    .tab-right {
-        top: -100%;
-        left: calc(40%);
-        transform: skew(30deg);
-        border-radius: 0 10px 0 0;
-        background-color: var(--current-tab-color);
-
-        &::after {
-            content: "";
-            position: absolute;
-            background: transparent;
-            width: 20px;
-            height: 100%;
-            left: 100%;
-            border-radius: 0 0 0 10px;
-            box-shadow: -10px 10px var(--current-tab-color);
-            transition: var(--transistion-timing);
-        }
-    }
+    
 
     .main-container.switched {
-        --current-tab-color: var(--color-tertiary);
-        
-        & .tab-container {
-            left: 50%;
-
-            & .tab-left {
-                transform: skew(-30deg);
-                border-radius: 10px 0 0 0;
-
-                &::before {
-                    width: 20px;
-                }
-            }
-
-            & .tab-right {
-                transform: skew(0deg);
-                border-radius: 0 10px 0 0;
-
-                &::after {
-                    width: 0px;
-                }
-            }
-        }
 
         & .category-container.diner {
             position: absolute;
@@ -310,6 +322,10 @@ function onSwitch(value: boolean): void {
 
         & .formulas-container {
             border-radius: 10px 0px 10px 10px;
+        }
+
+        .title-container.diner > h2 {
+            color: var(--color-secondary-light);
         }
     }
 }
