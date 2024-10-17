@@ -76,6 +76,14 @@ function onSwitch(value: boolean): void {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        &.lunch {
+            color: var(--color-tertiary);
+        }
+
+        &.diner {
+            color: var(--color-secondary-light);
+        }
     }
 
     @media (min-width: 769px) {
@@ -105,7 +113,6 @@ function onSwitch(value: boolean): void {
             
             &.lunch {
                 background-color: var(--color-secondary-light);
-                color: var(--color-tertiary);
     
                 &::before {
                     box-shadow: 10px 10px 0px var(--color-secondary-light);
@@ -118,7 +125,6 @@ function onSwitch(value: boolean): void {
             
             &.diner {
                 background-color: var(--color-tertiary);
-                color: var(--color-secondary-light);
                 
                 &::before {
                     box-shadow: 10px 10px 0px var(--color-tertiary);
