@@ -65,4 +65,13 @@ const currentContent = computed(() => {
 #button-cta {
     padding: 30px 0px;
 }
+
+@media (max-width: 410px) {
+    .title {
+        display: block;
+    }
+    .title-separator {
+        display: none;
+    }
+}
 </style>
