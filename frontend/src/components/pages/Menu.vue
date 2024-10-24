@@ -35,7 +35,7 @@ const currentContent = computed(() => {
         <component :is="currentContent" />
     </PageContent>
     <div id="button-cta">
-        <ButtonDefault label="Réserver une table" @onClick="onCtaClick"/>
+        <ButtonDefault label="Réserver une table" @on-click="onCtaClick"/>
     </div>
 </template>
 

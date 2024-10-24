@@ -98,7 +98,7 @@ const isMaxScrolled = computed(() => {
         </div>
     </PageContent>
     <div id="button-cta">
-        <ButtonDefault label="Réserver une table" @onClick="onCtaClick"/>
+        <ButtonDefault label="Réserver une table" @on-click="onCtaClick"/>
     </div>
     <Modal :show="showModal" @hide="onEmitHide">
         <ModalImage :path="modalImage.path" :title="modalImage.title"/>

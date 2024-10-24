@@ -3,13 +3,13 @@ const props = defineProps<{
     label: string
 }>()
 
-const emit = defineEmits<{
+const emits = defineEmits<{
     (e: 'onClick'): void
 }>()
 </script>
 
 <template>
-    <button @click="emit('onClick')">{{ props.label }}</button>
+    <button @click="emits('onClick')">{{ props.label }}</button>
 </template>
 
 <style lang="css" scoped>

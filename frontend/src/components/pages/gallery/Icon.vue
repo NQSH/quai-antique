@@ -5,12 +5,12 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div :class="`container ${isActive ? 'active' : ''}`">
+    <div :class="`container ${props.isActive ? 'active' : ''}`">
         <slot />
     </div>
 </template>
 
-<style lang="css">
+<style lang="css" scoped>
 .container {
     position: relative;
 
@@ -32,12 +32,12 @@ const props = defineProps<{
             border: 1px solid var(--color-secondary);
         }
 
-        & > svg > rect {
+        & > :deep(svg) > rect {
             fill: var(--color-secondary);
         }
     }
 
-    & > svg > rect {
+    & > :deep(svg) > rect {
         fill: var(--color-secondary-light);
     }
 }
