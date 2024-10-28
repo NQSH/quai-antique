@@ -6,7 +6,7 @@ export class SentenceValidator extends InputValidator {
             {
                 validate: (value: string) => {
                     const regex = new RegExp(/^[a-zA-Z0-9 ,.'-]+$/);
-                    return regex.test(value);
+                    return regex.test(value) || value.trim() === '';
                 },
                 error: 'Les caractères spéciaux ne sont pas autorisés'
             },

@@ -16,12 +16,12 @@ import { Helpers } from '@/helpers/_helpers';
 const inputs = reactive([
     new Input('name', 'Votre prénom', '', Validators.Name()),
     new Input('surname', 'Votre nom', '', Validators.Name()),
-    new Input('date', 'Date de réservation', Helpers.FormatTool.Date.toFullYearMonthDay(new Date()), Validators.Booking),
+    new Input('date', 'Date de réservation', Helpers.FormatTool.Date.toFullYearMonthDay(new Date()), Validators.Booking()),
     new Input('service', 'Service souhaité', 'lunch'),
     new Input('time', 'Heure d\'arrivée', ''),
     new Input('numberOfPerson', 'Nombres de convives', 1),
     new Input('hasAllergy', 'Avez-vous des allergies ?', true),
-    new Input('allergies', 'Lesquelles ?', '', Validators.Sentence),
+    new Input('allergies', 'Lesquelles ?', '', Validators.Sentence()),
 ])
 
 const establishmentInfo = {

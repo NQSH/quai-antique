@@ -11,7 +11,6 @@ export class InputValidator {
     ) { }
 
     public isValid(value: any): boolean {
-        console.log("HEY")
         this._errors = [];
         this._validators.forEach(validator => {
             if (!validator.validate(value)) this._errors.push(validator.error);
