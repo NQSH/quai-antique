@@ -3,6 +3,7 @@ import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Router from './components/Router.vue';
 import Main from './components/Main.vue';
+import Toast from './components/Toast.vue';
 
 </script>
 
@@ -16,4 +17,5 @@ import Main from './components/Main.vue';
       <Footer />
     </template>
   </Router>
+  <Toast />
 </template>
