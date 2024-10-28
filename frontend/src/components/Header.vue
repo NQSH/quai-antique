@@ -2,6 +2,9 @@
 import { computed, inject, ref } from 'vue';
 import IconBurger from './header/IconBurger.vue';
 import IconAccount from './header/IconAccount.vue';
+import { useAuthentication } from '@/composables/useAuthentication';
+
+const { authentication, isLoading } = useAuthentication();
 
 const showAccountNav = ref(false);
 const showMainNav = ref(false);
@@ -15,6 +18,8 @@ const mainNavStyle = computed(() => {
 })
 
 function switchAccountNavDisplay() {
+    if(isLoading.value) return;
+
     if(showMainNav.value) {
         showMainNav.value = false;
     }
@@ -32,6 +37,10 @@ function switchMainNavDisplay() {
 
 const route = inject('currentRoute');
 
+const accountIconStyle = computed(() => {
+    const baseStyle = 'icon icon-account';
+    return isLoading ? baseStyle + ' loading' : baseStyle;
+})
 </script>
 
 <template>
@@ -44,10 +53,15 @@ const route = inject('currentRoute');
         <a :class="route === 'menu' ? 'active' : ''" href="#/menu">Menu</a>
         <a :class="route === 'booking' ? 'active' : ''" href="#/booking">Réserver</a>
     </nav>
-    <IconAccount class="icon icon-account" @click="switchAccountNavDisplay"/>
-    <nav :class="accountNavStyle">
+    <IconAccount :class="'icon icon-account'" @click="switchAccountNavDisplay" />
+    <nav :class="accountNavStyle" v-if="!authentication">
         <a :class="route === 'signin' ? 'active' : ''" href="#/signin">Devenir client</a>
         <a :class="route === 'login' ? 'active' : ''" href="#/login">Se connecter</a>
+    </nav>
+    <nav :class="accountNavStyle" v-if="authentication">
+        <a :class="route === 'account' ? 'active' : ''" href="#/account">Mon compte</a>
+        <a :class="route === 'bookings' ? 'active' : ''" href="#/bookings">Mes réservations</a>
+        <a href="#/logout">Se connecter</a>
     </nav>
 </header>
 </template>
@@ -113,10 +127,15 @@ nav > a {
     height: 20px;
     color: white;
     cursor: pointer;
+    transition: 300ms;
 }
 
 .icon-burger {
     display: none;
+}
+
+.icon-account.loading {
+    color: var(--color-tertiary-light)
 }
 
 @media (max-width: 992px) {
