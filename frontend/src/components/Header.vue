@@ -3,6 +3,7 @@ import { computed, inject, ref } from 'vue';
 import IconBurger from './header/IconBurger.vue';
 import IconAccount from './header/IconAccount.vue';
 import { useAuthentication } from '@/composables/useAuthentication';
+import NavLink from './header/NavLink.vue';
 
 const { authentication, isLoading } = useAuthentication();
 
@@ -35,7 +36,7 @@ function switchMainNavDisplay() {
     showMainNav.value = !showMainNav.value;
 }
 
-const route = inject('currentRoute');
+const route = inject('currentRoute') as string;
 
 const accountIconStyle = computed(() => {
     const baseStyle = 'icon icon-account';
@@ -48,20 +49,20 @@ const accountIconStyle = computed(() => {
     <a href="#/" class="brand text-title">Quai Antique</a>
     <IconBurger class="icon icon-burger" @click="switchMainNavDisplay"/>
     <nav :class="mainNavStyle">
-        <a :class="route === '' ? 'active' : ''" href="#/">Accueil</a>
-        <a :class="route === 'gallery' ? 'active' : ''" href="#/gallery">Galerie</a>
-        <a :class="route === 'menu' ? 'active' : ''" href="#/menu">Menu</a>
-        <a :class="route === 'booking' ? 'active' : ''" href="#/booking">Réserver</a>
+        <NavLink :route name="" label="Accueil"/>
+        <NavLink :route name="gallery" label="Galerie"/>
+        <NavLink :route name="menu" label="Menu"/>
+        <NavLink :route name="booking" label="Réserver"/>
     </nav>
-    <IconAccount :class="'icon icon-account'" @click="switchAccountNavDisplay" />
+    <IconAccount :class="accountIconStyle" @click="switchAccountNavDisplay" />
     <nav :class="accountNavStyle" v-if="!authentication">
-        <a :class="route === 'signin' ? 'active' : ''" href="#/signin">Devenir client</a>
-        <a :class="route === 'login' ? 'active' : ''" href="#/login">Se connecter</a>
+        <NavLink :route name="signin" label="Devenir client"/>
+        <NavLink :route name="login" label="Se connnecter"/>
     </nav>
     <nav :class="accountNavStyle" v-if="authentication">
-        <a :class="route === 'account' ? 'active' : ''" href="#/account">Mon compte</a>
-        <a :class="route === 'bookings' ? 'active' : ''" href="#/bookings">Mes réservations</a>
-        <a href="#/logout">Se connecter</a>
+        <NavLink :route name="account" label="Mon compte"/>
+        <NavLink :route name="bookings" label="Mes réservations"/>
+        <NavLink :route name="signout" label="Se déconnecter"/>
     </nav>
 </header>
 </template>
@@ -87,7 +88,7 @@ header {
     flex: 1;
 }
 
-nav > a {
+nav > :deep(a) {
     color: var(--color-white);
 
     &.active {
