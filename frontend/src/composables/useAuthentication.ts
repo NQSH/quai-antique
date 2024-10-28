@@ -1,10 +1,13 @@
 import { Services } from "@/services/_services";
 import type CustomResponse from "@/services/classes/CustomResponse";
 import { onMounted, ref } from "vue";
+import { useToast } from "./useToast";
 
 export enum Roles { 'USER', 'ADMIN' }
 
 export function useAuthentication() {
+    const { popMessage } = useToast();
+
     const authentication = ref<Data | null>();
     const isLoading = ref(false);
     const error = ref();
@@ -24,7 +27,7 @@ export function useAuthentication() {
     }
 
     function handleLogOut(): void {
-
+        popMessage("Votre session a été déconnectée");
     }
 
     function logOut(): void {
@@ -44,6 +47,7 @@ export function useAuthentication() {
 
     function handleSignOut(): void {
         authentication.value = null;
+        popMessage("Votre compte a bien été supprimé");
     }
 
     function signOut(): void {
@@ -60,6 +64,8 @@ export function useAuthentication() {
         const refreshToken = getCookie('refreshToken');
         if (refreshToken) {
             Services.Authentication.refreshToken(handleRefreshToken, { token: refreshToken })
+        } else {
+            loading(false);
         }
     }
 
@@ -69,6 +75,7 @@ export function useAuthentication() {
 
     return {
         authentication,
+        isLoading,
         error,
         logIn,
         logOut,
