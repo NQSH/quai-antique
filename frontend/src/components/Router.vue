@@ -5,6 +5,7 @@ import Menu from '@/components/pages/Menu.vue';
 import Gallery from '@/components/pages/Gallery.vue';
 import Booking from '@/components/pages/Booking.vue';
 import NotFound from '@/components/pages/NotFound.vue';
+import LogIn from './pages/LogIn.vue';
 
 const routes = [
     {
@@ -26,6 +27,11 @@ const routes = [
         path: '/booking',
         component: Booking,
         title: 'Réservation'
+    },
+    {
+        path: '/login',
+        component: LogIn,
+        title: 'Connexion'
     }
 ]
 

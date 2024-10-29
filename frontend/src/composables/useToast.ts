@@ -1,13 +1,15 @@
-import { onMounted, ref, watch } from "vue";
+import { ref } from "vue";
+
+const toastMessage = ref<string | undefined>();
 
 export function useToast() {
-    const toastMessage = ref<string | undefined>();
 
     function popMessage(message: string): void {
+
         toastMessage.value = message;
         setTimeout(() => {
             toastMessage.value = undefined;
-        }, 3000)
+        }, 5000)
     }
 
     return {

@@ -22,7 +22,6 @@ function logIn(payload: { email: string, password: string }): CustomResponse {
 
 function logOut(): void {
     document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    console.log("Déconnexion...");
 }
 
 function signIn(payload: { email: string, password: string }): CustomResponse {
@@ -34,7 +33,6 @@ function signIn(payload: { email: string, password: string }): CustomResponse {
 
 function signOut(): void {
     document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    console.log("Suppression du compte...");
 }
 
 function refreshToken(payload: { token: string }): CustomResponse {
@@ -43,7 +41,10 @@ function refreshToken(payload: { token: string }): CustomResponse {
         return new CustomResponse(true, { accessToken: 'adminAccessToken', role: 'ADMIN' });
     } else if (token === 'clientRefreshToken' + new Date().getDate()) {
         return new CustomResponse(true, { accessToken: 'clientAccessToken', role: 'USER' });
-    } else return new CustomResponse(false, undefined, "La session a expiré.");
+    } else {
+        document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        return new CustomResponse(false, undefined, "La session a expiré.")
+    };
 }
 
 export default {

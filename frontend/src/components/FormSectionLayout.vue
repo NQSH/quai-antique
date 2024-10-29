@@ -8,9 +8,9 @@ const props = defineProps<{
 }>()
 
 const sectionStyle = computed(() => {
-    const isCenteret = props.centeredTitle ? 'centered' : '';
+    const isCentered = props.centeredTitle ? 'centered' : '';
     const isOneLined = props.oneLined ? 'onelined' : '';
-    return `${isCenteret} ${isOneLined}`;
+    return `${isCentered} ${isOneLined}`;
 })
 </script>
 

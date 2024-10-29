@@ -1,11 +1,15 @@
 import { ref, watch } from "vue";
 import { useAuthentication } from "./useAuthentication";
 import { Services } from "@/services/_services";
+import { useToast } from "./useToast";
+import { Helpers } from "@/helpers/_helpers";
+
+const user = ref<Data | undefined>();
 
 export function useUser() {
-    const user = ref<Data | undefined>();
 
     const { authentication } = useAuthentication();
+    const { popMessage } = useToast();
 
     watch(authentication, () => {
         if (authentication.value) {
@@ -20,6 +24,14 @@ export function useUser() {
             user.value = undefined;
         }
     })
+
+    watch(user, () => {
+        if (user.value) popMessage(`Bonjour ${user.value && Helpers.FormatTool.Text.toSentenceCase(user.value?.name)} !`)
+    })
+
+    return {
+        user
+    }
 }
 
 type Data = {

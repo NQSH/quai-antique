@@ -4,8 +4,9 @@ import ButtonDefault from './inputs/ButtonDefault.vue';
 import type { Input } from './inputs/classes/_input';
 
 const props = defineProps<{
-    inputs: Reactive<Input[]>,
+    inputs: Reactive<Input[]>
     submitBtnLabel: string
+    isLoading?: boolean
 }>()
 
 const emits = defineEmits<{
@@ -27,7 +28,7 @@ function onBeforeSubmit(): void {
     <form @submit.prevent>
         <slot />
         <div>
-            <ButtonDefault :label="props.submitBtnLabel" @on-click="onBeforeSubmit()" class="submit-btn"/>
+            <ButtonDefault :label="props.submitBtnLabel" @on-click="onBeforeSubmit()" :is-loading />
             <slot name="add-buttons" />
         </div>
     </form>
@@ -39,10 +40,8 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 30px;
     padding: 10px;
-}
-
-.submit-btn {
-    margin: 30px 0px;
+    margin-bottom: 30px;
 }
 </style>

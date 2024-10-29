@@ -15,6 +15,13 @@ const props = defineProps<{
 
 <style lang="css" scoped>
 .container {
-    
+    & > ul {
+        padding-inline: 10px;
+        
+        & > li {
+            list-style: none ;
+            color: var(--color-danger);
+        }
+    }
 }
 </style>

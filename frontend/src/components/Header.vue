@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, provide, ref } from 'vue';
 import IconBurger from './header/IconBurger.vue';
 import IconAccount from './header/IconAccount.vue';
 import { useAuthentication } from '@/composables/useAuthentication';
 import NavLink from './header/NavLink.vue';
+import { useUser } from '@/composables/useUser';
 
-const { authentication, isLoading } = useAuthentication();
+const { authentication, isLoading, logOut } = useAuthentication();
+const { user } = useUser();
 
 const showAccountNav = ref(false);
 const showMainNav = ref(false);
@@ -23,46 +25,56 @@ function switchAccountNavDisplay() {
 
     if(showMainNav.value) {
         showMainNav.value = false;
-    }
-
-    showAccountNav.value = !showAccountNav.value;
+        setTimeout(() => { showAccountNav.value = !showAccountNav.value; }, 100)
+    } else showAccountNav.value = !showAccountNav.value;
 }
 
 function switchMainNavDisplay() {
     if(showAccountNav.value) {
         showAccountNav.value = false;
-    }
+        setTimeout(() => { showMainNav.value = !showMainNav.value; }, 100)
+    } else showMainNav.value = !showMainNav.value;
+}
 
-    showMainNav.value = !showMainNav.value;
+function hideNav(): void {
+    showMainNav.value = false;
+    showAccountNav.value = false;
 }
 
 const route = inject('currentRoute') as string;
 
 const accountIconStyle = computed(() => {
     const baseStyle = 'icon icon-account';
-    return isLoading ? baseStyle + ' loading' : baseStyle;
+    const loadingStyle = isLoading.value ? 'loading' : '';
+    const loggedStyle = user.value ? 'logged' : '';
+
+    return `${baseStyle} ${loadingStyle} ${loggedStyle}`;
 })
+
+provide('hideNav', hideNav);
 </script>
 
 <template>
 <header>
     <a href="#/" class="brand text-title">Quai Antique</a>
-    <IconBurger class="icon icon-burger" @click="switchMainNavDisplay"/>
+    <IconBurger class="icon icon-burger" @click="switchMainNavDisplay" />
     <nav :class="mainNavStyle">
-        <NavLink :route name="" label="Accueil"/>
-        <NavLink :route name="gallery" label="Galerie"/>
-        <NavLink :route name="menu" label="Menu"/>
-        <NavLink :route name="booking" label="Réserver"/>
+        <NavLink name="" label="Accueil" />
+        <NavLink name="gallery" label="Galerie" />
+        <NavLink name="menu" label="Menu" />
+        <NavLink name="booking" label="Réserver" />
     </nav>
-    <IconAccount :class="accountIconStyle" @click="switchAccountNavDisplay" />
+    <IconAccount :class="accountIconStyle" @click="switchAccountNavDisplay" :is-loading/>
     <nav :class="accountNavStyle" v-if="!authentication">
-        <NavLink :route name="signin" label="Devenir client"/>
-        <NavLink :route name="login" label="Se connnecter"/>
+        <NavLink name="signin" label="Devenir client" />
+        <NavLink name="login" label="Se connnecter" />
     </nav>
     <nav :class="accountNavStyle" v-if="authentication">
-        <NavLink :route name="account" label="Mon compte"/>
-        <NavLink :route name="bookings" label="Mes réservations"/>
-        <NavLink :route name="signout" label="Se déconnecter"/>
+        <NavLink name="account" label="Mon compte" />
+        <NavLink name="bookings" label="Mes réservations" />
+        <span @click="logOut">
+            <NavLink name="" label="Se déconnecter" />
+        </span>
     </nav>
 </header>
 </template>
@@ -88,7 +100,7 @@ header {
     flex: 1;
 }
 
-nav > :deep(a) {
+nav :deep(a) {
     color: var(--color-white);
 
     &.active {
@@ -113,7 +125,7 @@ nav > :deep(a) {
     padding: 0px 20px;
     max-height: 0px;
     gap: 18px;
-    transition: 300ms;
+    transition: 100ms ease-in-out;
     overflow: hidden;
 
     &.show {
@@ -128,14 +140,14 @@ nav > :deep(a) {
     height: 20px;
     color: white;
     cursor: pointer;
-    transition: 300ms;
+    transition: 200ms;
 }
 
 .icon-burger {
     display: none;
 }
 
-.icon-account.loading {
+.icon-account.logged {
     color: var(--color-tertiary-light)
 }
 
@@ -167,7 +179,7 @@ nav > :deep(a) {
         padding: 0px 20px;
         max-height: 0px;
         gap: 18px;
-        transition: 300ms;
+        transition: 100ms ease-in-out;
         overflow: hidden;
 
         &.show {
