@@ -3,15 +3,15 @@ import { reactive } from 'vue';
 import FormLayout from '../FormLayout.vue';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
-import InputText from '../inputs/InputText.vue';
-import InputDate from '../inputs/InputDate.vue';
 import FormSectionLayout from '../FormSectionLayout.vue';
-import InputRadio from '../inputs/InputRadio.vue';
-import InputSelect from '../inputs/InputSelect.vue';
-import InputNumberSelect from '../inputs/InputNumberSelect.vue';
 import { Input } from '../inputs/classes/_input';
 import { Validators } from '../inputs/classes/_validators';
 import { Helpers } from '@/helpers/_helpers';
+import InputText from '../inputs/InputText.vue';
+import InputDate from '../inputs/InputDate.vue';
+import InputRadio from '../inputs/InputRadio.vue';
+import InputSelect from '../inputs/InputSelect.vue';
+import InputNumberSelect from '../inputs/InputNumberSelect.vue';
 
 const inputs = reactive([
     new Input('name', 'Votre prénom', '', Validators.Name()),
