@@ -6,7 +6,6 @@ import InputLayout from './InputLayout.vue';
 const props = defineProps<{
     input: Reactive<Input>
     options: string[]
-    default: string
 }>()
 
 watch(() => props.options, () => {
@@ -20,9 +19,12 @@ onMounted(() => {
 
 <template>
     <InputLayout :errors="props.input.validator?.errors">
-        <select v-model="props.input.value">
-            <option v-for="option in options" :value="option">{{ option.split(':').join(' : ') }}</option>
-        </select>
+        <div class="input-container">
+            <label :for="props.input.name">{{ props.input.label }}</label>
+            <select v-model="props.input.value" :name="props.input.name">
+                <option v-for="option in options" :value="option">{{ option.split(':').join(' : ') }}</option>
+            </select>
+        </div>
     </InputLayout>
 </template>
 
@@ -47,6 +49,7 @@ label {
     left: 10px;
     padding: 0px 5px;
     transform: translateY(-50%);
+    color: var(--color-tertiary-light);
     background-color: white;
     font-size: 12px;
 }

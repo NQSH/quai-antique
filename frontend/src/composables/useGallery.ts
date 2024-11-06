@@ -1,8 +1,8 @@
 import { Services } from "@/services/_services";
-import { onMounted, ref, type Ref } from "vue";
+import { onMounted, ref } from "vue";
 
 export function useGallery() {
-    const images = ref<Image[]>([]);
+    const images = ref<Data>([]);
 
     onMounted(() => {
         const response = Services.Gallery.get();

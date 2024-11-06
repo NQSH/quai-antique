@@ -20,7 +20,7 @@ function get(accessToken: string): CustomResponse {
             email: 'john.doe@email.fr',
             additional: {
                 numberOfPerson: 3,
-                allergye: true,
+                allergy: true,
                 allergies: 'fruits de mer'
             }
         })

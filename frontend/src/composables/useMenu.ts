@@ -1,5 +1,5 @@
 import { Services } from "@/services/_services";
-import { onMounted, ref, type Ref } from "vue";
+import { onMounted, ref } from "vue";
 
 export enum MainCategory { MEAT = "meat", FISH = "fish", VEGE = "vege", SHARE = "share" }
 export enum DrinkCategory { SOFT = "soft", SOFT_COCKTAIL = "soft_cocktail", HARD_COCKTAIL = "hard_cocktail", BEER = "beer", WINE = "wine", COFFEE = "coffee" }

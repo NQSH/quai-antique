@@ -39,12 +39,11 @@ watch(authentication, () => {
         <TitleContent>
             Connexion
         </TitleContent>
-        <FormLayout :inputs :submit-btn-label="'Se connecter'" @on-submit="(data: object) => onSubmit(data as Data)" :is-loading>
+        <FormLayout :inputs :submit-btn-label="'Se connecter'" @on-submit="(data: object) => onSubmit(data as Data)" :is-loading :error>
             <FormSectionLayout title="Identifiants" :centered-title="true" :one-lined="true">
                 <InputText :input="inputs[0]" :options="{ type: 'email', disabled: isLoading }"/>
                 <InputText :input="inputs[1]" :options="{ type: 'password', disabled: isLoading }"/>
             </FormSectionLayout>
-            <p v-if="error">{{ error }}</p>
         </FormLayout>
         <Link href="#/signin" label="Devenir client"/>
     </PageContent>

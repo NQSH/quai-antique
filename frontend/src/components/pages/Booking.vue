@@ -15,21 +15,26 @@ import InputNumberSelect from '../inputs/InputNumberSelect.vue';
 import { useAuthentication } from '@/composables/useAuthentication';
 import { useRouter } from '@/composables/useRouter';
 import { useToast } from '@/composables/useToast';
+import { useUser } from '@/composables/useUser';
+import { usebooking, type Booking } from '@/composables/useBooking';
+
+const { user } = useUser();
 
 const inputs = reactive([
-    new Input('name', 'Votre prénom', '', Validators.Name()),
-    new Input('surname', 'Votre nom', '', Validators.Name()),
+    new Input('name', 'Votre prénom', Helpers.FormatTool.Text.toSentenceCase(user.value?.name), Validators.Name()),
+    new Input('surname', 'Votre nom', user.value?.surname.toUpperCase(), Validators.Name()),
     new Input('date', 'Date de réservation', Helpers.FormatTool.Date.toFullYearMonthDay(new Date()), Validators.Booking()),
     new Input('service', 'Service souhaité', 'lunch'),
-    new Input('time', 'Heure d\'arrivée', ''),
-    new Input('numberOfPerson', 'Nombres de convives', 1),
-    new Input('hasAllergy', 'Avez-vous des allergies ?', true),
-    new Input('allergies', 'Lesquelles ?', '', Validators.Sentence()),
+    new Input('time', 'Heure d\'arrivée', '', Validators.NotEmpty()),
+    new Input('numberOfPerson', 'Nombres de convives', user.value?.additional?.numberOfPerson),
+    new Input('hasAllergy', 'Avez-vous des allergies ?', user.value?.additional?.allergy),
+    new Input('allergies', 'Lesquelles ?', user.value?.additional?.allergies, Validators.Sentence()),
 ])
 
 const { authentication } = useAuthentication();
 const { redirectTo } = useRouter();
 const { popMessage } = useToast();
+const { post, isLoading, error } = usebooking();
 
 const establishmentInfo = {
     servicesTime: {
@@ -40,14 +45,14 @@ const establishmentInfo = {
     capacity: 40,
 }
 
-function onSubmit(data: object): void {
-    console.log(data);
+function onSubmit(data: Booking): void {
+    post(data);
 }
 
 onBeforeMount(() => {
     if(!authentication.value) {
+        popMessage('Vous devez être connecté pour pouvoir réserver.');
         redirectTo('login');
-        popMessage('Vous devez être connecté pour pouvoir réserver.')
     }
 })
 
@@ -58,7 +63,7 @@ onBeforeMount(() => {
         <TitleContent>
             Réservation
         </TitleContent>
-        <FormLayout :inputs :submit-btn-label="'Envoyer'" @on-submit="(data: object) => onSubmit(data)">
+        <FormLayout :inputs :submit-btn-label="'Envoyer'" @on-submit="(data: object) => onSubmit(data as Booking)" :is-loading :error>
             <FormSectionLayout title="Information de réservation" centered-title one-lined>
                 <InputText :input="inputs[0]" />
                 <InputText :input="inputs[1]" />
@@ -74,8 +79,9 @@ onBeforeMount(() => {
                     :input="inputs[4]"
                     :options="Helpers.Datetime.getServiceTimes(
                         inputs[2].value,
-                        inputs[3].value === 'lunch' ? establishmentInfo.servicesTime.lunch : establishmentInfo.servicesTime.diner, 2)"
-                    default="Choisissez l'heure de réservation"
+                        inputs[3].value === 'lunch' ? establishmentInfo.servicesTime.lunch : establishmentInfo.servicesTime.diner,
+                        establishmentInfo.serviceDuration
+                    )"
                 />
                 <InputNumberSelect :input="inputs[5]" />
                 <InputRadio :input="inputs[6]" :options="[

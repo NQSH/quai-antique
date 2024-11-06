@@ -7,6 +7,7 @@ const props = defineProps<{
     inputs: Reactive<Input[]>
     submitBtnLabel: string
     isLoading?: boolean
+    error?: string
 }>()
 
 const emits = defineEmits<{
@@ -27,7 +28,8 @@ function onBeforeSubmit(): void {
 <template>
     <form @submit.prevent>
         <slot />
-        <div>
+        <p v-if="props.error" class="error">{{ props.error }}</p>
+        <div class="bottom">
             <ButtonDefault :label="props.submitBtnLabel" @on-click="onBeforeSubmit()" :is-loading />
             <slot name="add-buttons" />
         </div>
