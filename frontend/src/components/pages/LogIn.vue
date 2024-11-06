@@ -8,6 +8,8 @@ import { Validators } from '../inputs/classes/_validators';
 import FormSectionLayout from '../FormSectionLayout.vue';
 import InputText from '../inputs/InputText.vue';
 import { useAuthentication } from '@/composables/useAuthentication';
+import { useRouter } from '@/composables/useRouter';
+import Link from '../Link.vue';
 
 type Data = {
     email: string
@@ -20,13 +22,14 @@ const inputs = reactive([
 ])
 
 const { logIn, authentication, error, isLoading } = useAuthentication();
+const { navigateFrom } = useRouter();
 
 function onSubmit(data: Data): void {
     logIn(data);
 }
 
 watch(authentication, () => {
-    if(authentication.value) window.location.href = '#/';
+    if(authentication.value) navigateFrom();
 }, { immediate: true })
 
 </script>
@@ -43,6 +46,6 @@ watch(authentication, () => {
             </FormSectionLayout>
             <p v-if="error">{{ error }}</p>
         </FormLayout>
-        <a href="#/signin">Devenir client</a>
+        <Link href="#/signin" label="Devenir client"/>
     </PageContent>
 </template>

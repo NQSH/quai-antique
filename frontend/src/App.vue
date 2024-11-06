@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-import Router from './components/Router.vue';
 import Main from './components/Main.vue';
 import Toast from './components/Toast.vue';
 import { useAuthentication } from './composables/useAuthentication';
 import { onMounted } from 'vue';
+import { useRouter } from './composables/useRouter';
 
 const { refreshToken } = useAuthentication();
+const { currentView } = useRouter();
 
 onMounted(() => {
   refreshToken()
@@ -16,14 +17,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <Router>
-    <template #header>
-      <Header />
-    </template>
-    <Main #main/>
-    <template #footer>
-      <Footer />
-    </template>
-  </Router>
+  <Header />
+  <Main>
+    <component :is="currentView" />
+  </Main>
+  <Footer />
   <Toast />
 </template>

@@ -41,8 +41,6 @@ function hideNav(): void {
     showAccountNav.value = false;
 }
 
-const route = inject('currentRoute') as string;
-
 const accountIconStyle = computed(() => {
     const baseStyle = 'icon icon-account';
     const loadingStyle = isLoading.value ? 'loading' : '';

@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import { useRouter } from '@/composables/useRouter';
 import ButtonDefault from '../inputs/ButtonDefault.vue';
 import PageContent from '../PageContent.vue';
 
-function onClick(): void {
-    window.location.href = '#/booking';
-}
+const { navigateTo } = useRouter();
 
 </script>
 
@@ -12,8 +11,8 @@ function onClick(): void {
     <section id="hero">
         <img src="/img-hero.png" alt="Image du hero">
         <h1 class="text-header">Bienvenu au<br><span>Quai Antique</span></h1>
-        <ButtonDefault label="Réserver une table" @on-click="onClick"/>
-        <a href="#/menus">Découvrir notre carte</a>
+        <ButtonDefault label="Réserver une table" @on-click="navigateTo('booking')"/>
+        <a href="#/menu">Découvrir notre carte</a>
     </section>
     <PageContent>
         <article id="leader-article">
@@ -69,7 +68,7 @@ function onClick(): void {
         </article>
     </PageContent>
     <div id="bottom-cta">
-        <ButtonDefault label="Réserver une table" @on-click="onClick"/>
+        <ButtonDefault label="Réserver une table" @on-click="navigateTo('booking')"/>
     </div>
 </template>
 

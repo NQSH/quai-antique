@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { onBeforeMount, reactive } from 'vue';
 import FormLayout from '../FormLayout.vue';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
@@ -12,6 +12,9 @@ import InputDate from '../inputs/InputDate.vue';
 import InputRadio from '../inputs/InputRadio.vue';
 import InputSelect from '../inputs/InputSelect.vue';
 import InputNumberSelect from '../inputs/InputNumberSelect.vue';
+import { useAuthentication } from '@/composables/useAuthentication';
+import { useRouter } from '@/composables/useRouter';
+import { useToast } from '@/composables/useToast';
 
 const inputs = reactive([
     new Input('name', 'Votre prénom', '', Validators.Name()),
@@ -23,6 +26,10 @@ const inputs = reactive([
     new Input('hasAllergy', 'Avez-vous des allergies ?', true),
     new Input('allergies', 'Lesquelles ?', '', Validators.Sentence()),
 ])
+
+const { authentication } = useAuthentication();
+const { redirectTo } = useRouter();
+const { popMessage } = useToast();
 
 const establishmentInfo = {
     servicesTime: {
@@ -36,6 +43,13 @@ const establishmentInfo = {
 function onSubmit(data: object): void {
     console.log(data);
 }
+
+onBeforeMount(() => {
+    if(!authentication.value) {
+        redirectTo('login');
+        popMessage('Vous devez être connecté pour pouvoir réserver.')
+    }
+})
 
 </script>
 

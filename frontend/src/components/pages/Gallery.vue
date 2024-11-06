@@ -10,8 +10,10 @@ import ButtonDefault from '../inputs/ButtonDefault.vue';
 import Modal from '../Modal.vue';
 import ModalImage from './gallery/ModalImage.vue';
 import { useGallery } from '@/composables/useGallery';
+import { useRouter } from '@/composables/useRouter';
 
 const { images } = useGallery();
+const { navigateTo } = useRouter();
 
 const isSwitched = ref(false);
 
@@ -45,10 +47,6 @@ function onImageClick(path: string, title: string): void {
 
 function onEmitHide(): void {
     showModal.value = false;
-}
-
-function onCtaClick(): void {
-    window.location.href = '#/booking';
 }
 
 const isScrolled = computed(() => {
@@ -98,7 +96,7 @@ const isMaxScrolled = computed(() => {
         </div>
     </PageContent>
     <div id="button-cta">
-        <ButtonDefault label="Réserver une table" @on-click="onCtaClick"/>
+        <ButtonDefault label="Réserver une table" @on-click="navigateTo('booking')"/>
     </div>
     <Modal :show="showModal" @hide="onEmitHide">
         <ModalImage :path="modalImage.path" :title="modalImage.title"/>
