@@ -16,7 +16,7 @@ export function useGallery() {
     }
 }
 
-type Image = {
+export type Image = {
     path: string,
     title: string
 }

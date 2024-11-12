@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, ref, useTemplateRef, type Ref } from 'vue';
+import { computed, ref, useTemplateRef } from 'vue';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
 import Icon from './gallery/Icon.vue';
@@ -7,21 +7,16 @@ import IconDesktop from './gallery/icons/IconDesktop.vue';
 import IconMobileRegular from './gallery/icons/IconMobile.vue';
 import IconSwitch from './gallery/icons/IconSwitch.vue';
 import ButtonDefault from '../inputs/ButtonDefault.vue';
-import Modal from '../Modal.vue';
-import ModalImage from './gallery/ModalImage.vue';
-import { useGallery } from '@/composables/useGallery';
+import ImageViewerModal from './gallery/ImageViewerModal.vue';
+import { useGallery, type Image } from '@/composables/useGallery';
 import { useRouter } from '@/composables/useRouter';
+import { useModal } from '@/composables/useModal';
 
 const { images } = useGallery();
 const { navigateTo } = useRouter();
+const { openModal } = useModal();
 
 const isSwitched = ref(false);
-
-const showModal = ref(false);
-const modalImage = ref({
-    path: '',
-    title: ''
-})
 
 const galleryElement = useTemplateRef('gallery-element');
 
@@ -39,14 +34,8 @@ function onSwitchClick(value: boolean) : void {
     isSwitched.value = value;
 }
 
-function onImageClick(path: string, title: string): void {
-    modalImage.value.path = path;
-    modalImage.value.title = title;
-    showModal.value = true;
-}
-
-function onEmitHide(): void {
-    showModal.value = false;
+function onImageClick(image: Image): void {
+    openModal(ImageViewerModal, image)
 }
 
 const isScrolled = computed(() => {
@@ -76,7 +65,7 @@ const isMaxScrolled = computed(() => {
         </div>
         <div id="gallery">
             <div id="gallery-images" @scroll="onScroll" ref="gallery-element" :data-switched="isSwitched" :data-scrolled="isScrolled" :data-max-scrolled="isMaxScrolled">
-                <div class="image-container" v-for="image in images" @click="onImageClick(image.path, image. title)">
+                <div class="image-container" v-for="image in images" @click="onImageClick(image)">
                     <img :src="'/' + image.path" :alt="image.title">
                     <span>{{ image.title.slice(0, 1).toUpperCase() + image.title.slice(1) }}</span>
                 </div>
@@ -98,9 +87,6 @@ const isMaxScrolled = computed(() => {
     <div id="button-cta">
         <ButtonDefault label="Réserver une table" @on-click="navigateTo('booking')"/>
     </div>
-    <Modal :show="showModal" @hide="onEmitHide">
-        <ModalImage :path="modalImage.path" :title="modalImage.title"/>
-    </Modal>
 </template>
 
 <style lang="css" scoped>

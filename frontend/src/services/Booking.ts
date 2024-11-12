@@ -3,12 +3,17 @@ import CustomResponse from "./classes/CustomResponse";
 import { withDelayRequest } from "./_withDelayRequest";
 
 function get(accessToken: string): CustomResponse {
-    if (accessToken === 'clientAccesToken') {
+    if (accessToken === 'clientAccessToken') {
         return new CustomResponse(true, [
             {
-                date: '2024-11-06',
+                id: 1,
+                name: 'john',
+                surname: 'doe',
+                date: '2024-11-13',
+                service: 'diner',
                 time: '19:15',
                 numberOfPerson: 3,
+                allergy: true,
                 allergies: 'Fruits de mer'
             }
         ])
@@ -20,10 +25,15 @@ function get(accessToken: string): CustomResponse {
 function post(payload: Booking): CustomResponse {
     const { numberOfPerson } = payload;
     if (numberOfPerson > 10) return new CustomResponse(false, undefined, 'Le nombre de personne dépasse notre capacité pour ce service.')
-    return new CustomResponse(true)
+    return new CustomResponse(true, payload);
+}
+
+function put(payload: Booking): CustomResponse {
+    return new CustomResponse(true, payload);
 }
 
 export default {
     get,
     post: (callback: Function, payload: Booking) => withDelayRequest(post, callback, payload),
+    put: (callback: Function, payload: Booking) => withDelayRequest(put, callback, payload),
 }

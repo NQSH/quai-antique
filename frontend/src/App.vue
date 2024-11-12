@@ -4,13 +4,14 @@ import Footer from './components/Footer.vue';
 import Main from './components/Main.vue';
 import Toast from './components/Toast.vue';
 import { useAuthentication } from './composables/useAuthentication';
-import { onMounted } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useRouter } from './composables/useRouter';
+import Modal from './components/Modal.vue';
 
 const { refreshToken } = useAuthentication();
 const { currentView } = useRouter();
 
-onMounted(() => {
+onBeforeMount(() => {
   refreshToken()
 })
 
@@ -23,4 +24,5 @@ onMounted(() => {
   </Main>
   <Footer />
   <Toast />
+  <Modal />
 </template>

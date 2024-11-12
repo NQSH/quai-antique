@@ -13,7 +13,7 @@ watch(() => props.options, () => {
 })
 
 onMounted(() => {
-    props.input.value = props.options[0];
+    if(props.input.value === '') props.input.value = props.options[0];
 })
 </script>
 

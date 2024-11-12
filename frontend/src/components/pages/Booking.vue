@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, reactive } from 'vue';
+import { reactive } from 'vue';
 import FormLayout from '../FormLayout.vue';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
@@ -12,11 +12,10 @@ import InputDate from '../inputs/InputDate.vue';
 import InputRadio from '../inputs/InputRadio.vue';
 import InputSelect from '../inputs/InputSelect.vue';
 import InputNumberSelect from '../inputs/InputNumberSelect.vue';
-import { useAuthentication } from '@/composables/useAuthentication';
-import { useRouter } from '@/composables/useRouter';
-import { useToast } from '@/composables/useToast';
 import { useUser } from '@/composables/useUser';
 import { usebooking, type Booking } from '@/composables/useBooking';
+import ProtectedContent from '../ProtectedContent.vue';
+import { useEstablishment } from '@/composables/useEstablishment';
 
 const { user } = useUser();
 
@@ -31,65 +30,49 @@ const inputs = reactive([
     new Input('allergies', 'Lesquelles ?', user.value?.additional?.allergies, Validators.Sentence()),
 ])
 
-const { authentication } = useAuthentication();
-const { redirectTo } = useRouter();
-const { popMessage } = useToast();
 const { post, isLoading, error } = usebooking();
-
-const establishmentInfo = {
-    servicesTime: {
-        lunch: '12:00',
-        diner: '19:00'
-    },
-    serviceDuration: 2,
-    capacity: 40,
-}
+const { establishmentInfo } = useEstablishment();
 
 function onSubmit(data: Booking): void {
     post(data);
 }
 
-onBeforeMount(() => {
-    if(!authentication.value) {
-        popMessage('Vous devez être connecté pour pouvoir réserver.');
-        redirectTo('login');
-    }
-})
-
 </script>
 
 <template>
-    <PageContent>
-        <TitleContent>
-            Réservation
-        </TitleContent>
-        <FormLayout :inputs :submit-btn-label="'Envoyer'" @on-submit="(data: object) => onSubmit(data as Booking)" :is-loading :error>
-            <FormSectionLayout title="Information de réservation" centered-title one-lined>
-                <InputText :input="inputs[0]" />
-                <InputText :input="inputs[1]" />
-                <InputDate :input="inputs[2]" :options="{
-                    min: Helpers.FormatTool.Date.toFullYearMonthDay(new Date()),
-                    max: Helpers.FormatTool.Date.toFullYearMonthDay(new Date(new Date().setFullYear(new Date().getFullYear() + 1)))
-                }" />
-                <InputRadio :input="inputs[3]" :options="[
-                    { name: 'lunch', label: 'Midi', value: 'lunch' },
-                    { name: 'diner', label: 'Soir', value: 'diner' }
-                ]" />
-                <InputSelect
-                    :input="inputs[4]"
-                    :options="Helpers.Datetime.getServiceTimes(
-                        inputs[2].value,
-                        inputs[3].value === 'lunch' ? establishmentInfo.servicesTime.lunch : establishmentInfo.servicesTime.diner,
-                        establishmentInfo.serviceDuration
-                    )"
-                />
-                <InputNumberSelect :input="inputs[5]" />
-                <InputRadio :input="inputs[6]" :options="[
-                    { name: 'yes', label: 'Oui', value: true },
-                    { name: 'no', label: 'Non', value: false }
-                ]" />
-                <InputText v-if="inputs[6].value" :input="inputs[7]"/>
-            </FormSectionLayout>
-        </FormLayout>
-    </PageContent>
+    <ProtectedContent>
+        <PageContent>
+            <TitleContent>
+                Réservation
+            </TitleContent>
+            <FormLayout :inputs :submit-btn-label="'Envoyer'" @on-submit="(data) => onSubmit(data as Booking)" :is-loading :error>
+                <FormSectionLayout title="Information de réservation" centered-title one-lined>
+                    <InputText :input="inputs[0]" />
+                    <InputText :input="inputs[1]" />
+                    <InputDate :input="inputs[2]" :options="{
+                        min: Helpers.FormatTool.Date.toFullYearMonthDay(new Date()),
+                        max: Helpers.FormatTool.Date.toFullYearMonthDay(new Date(new Date().setFullYear(new Date().getFullYear() + 1)))
+                    }" />
+                    <InputRadio :input="inputs[3]" :options="[
+                        { name: 'lunch', label: 'Midi', value: 'lunch' },
+                        { name: 'diner', label: 'Soir', value: 'diner' }
+                    ]" />
+                    <InputSelect
+                        :input="inputs[4]"
+                        :options="Helpers.Datetime.getServiceTimes(
+                            inputs[2].value,
+                            inputs[3].value === 'lunch' ? establishmentInfo.servicesTime.lunch : establishmentInfo.servicesTime.diner,
+                            establishmentInfo.serviceDuration
+                        )"
+                    />
+                    <InputNumberSelect :input="inputs[5]" />
+                    <InputRadio :input="inputs[6]" :options="[
+                        { name: 'yes', label: 'Oui', value: true },
+                        { name: 'no', label: 'Non', value: false }
+                    ]" />
+                    <InputText v-if="inputs[6].value" :input="inputs[7]"/>
+                </FormSectionLayout>
+            </FormLayout>
+        </PageContent>
+    </ProtectedContent>
 </template>

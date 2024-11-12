@@ -1,4 +1,5 @@
 import Booking from "@/components/pages/Booking.vue";
+import Bookings from "@/components/pages/Bookings.vue";
 import Gallery from "@/components/pages/Gallery.vue";
 import Home from "@/components/pages/Home.vue";
 import LogIn from "@/components/pages/LogIn.vue";
@@ -35,6 +36,11 @@ export function useRouter() {
             path: '/login',
             component: LogIn,
             title: 'Connexion'
+        },
+        {
+            path: '/bookings',
+            component: Bookings,
+            title: 'Mes réservations'
         }
     ]
 
@@ -54,6 +60,7 @@ export function useRouter() {
 
     function navigateFrom(): void {
         window.location.hash = fromPath.value || '#/';
+        fromPath.value = undefined;
     }
 
     onBeforeMount(() => {
