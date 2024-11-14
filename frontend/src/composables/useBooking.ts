@@ -16,11 +16,13 @@ export function usebooking() {
     const { navigateTo } = useRouter();
     const { closeModal } = useModal();
 
+    function get(): void {
+
+    }
+
     function handlePost(response: CustomResponse): void {
         if (response.statusOK) {
             popMessage('Votre demande de réservation a bien été effectuée');
-            console.log(response.data);
-
             bookings.value?.push(response.data as Booking);
             navigateTo('bookings');
         } else error.value = response.message;
@@ -37,7 +39,8 @@ export function usebooking() {
         if (response.statusOK) {
             popMessage('La modification de réservation a bien été effectuée');
             const newBooking = response.data as Booking;
-            bookings.value?.filter(booking => booking.id !== newBooking.id).push(newBooking);
+            bookings.value = bookings.value?.filter(booking => booking.id !== newBooking.id);
+            bookings.value?.push(newBooking);
             navigateTo('bookings');
             closeModal();
         } else error.value = response.message;
@@ -56,7 +59,6 @@ export function usebooking() {
             const response = Services.Booking.get(authentication.value?.accessToken);
             if (response.statusOK) {
                 bookings.value = response.data as Data;
-
             }
         }
     }, { immediate: true })

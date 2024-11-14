@@ -38,6 +38,9 @@ const { modalComponent, componentProps, show, closeModal } = useModal();
 }
 
 #modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 10px;
     background-color: white;
     max-width: 100%;

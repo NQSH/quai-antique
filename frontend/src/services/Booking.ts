@@ -25,7 +25,7 @@ function get(accessToken: string): CustomResponse {
 function post(payload: Booking): CustomResponse {
     const { numberOfPerson } = payload;
     if (numberOfPerson > 10) return new CustomResponse(false, undefined, 'Le nombre de personne dépasse notre capacité pour ce service.')
-    return new CustomResponse(true, payload);
+    return new CustomResponse(true, { ...payload, id: Math.floor(Math.random() * 100) });
 }
 
 function put(payload: Booking): CustomResponse {

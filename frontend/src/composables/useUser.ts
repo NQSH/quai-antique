@@ -1,5 +1,4 @@
-import { ref, watch } from "vue";
-import { useAuthentication } from "./useAuthentication";
+import { ref } from "vue";
 import { Services } from "@/services/_services";
 import { useToast } from "./useToast";
 import { Helpers } from "@/helpers/_helpers";

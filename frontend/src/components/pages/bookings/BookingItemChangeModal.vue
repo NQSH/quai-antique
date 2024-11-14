@@ -8,6 +8,7 @@ import InputNumberSelect from '@/components/inputs/InputNumberSelect.vue';
 import InputRadio from '@/components/inputs/InputRadio.vue';
 import InputSelect from '@/components/inputs/InputSelect.vue';
 import InputText from '@/components/inputs/InputText.vue';
+import PageContent from '@/components/PageContent.vue';
 import TitleContent from '@/components/TitleContent.vue';
 import { usebooking, type Booking } from '@/composables/useBooking';
 import { useEstablishment } from '@/composables/useEstablishment';
@@ -33,41 +34,43 @@ const { put, isLoading, error } = usebooking();
 const { establishmentInfo } = useEstablishment();
 
 function onSubmit(booking: Booking): void {
-    put(booking)
+    put({ ...booking, id: props.booking.id });
 }
 
 </script>
 
 <template>
-    <TitleContent>
-        Modification de votre réservation
-    </TitleContent>
-    <FormLayout :inputs :submit-btn-label="'Enregistrer'" @on-submit="booking => onSubmit(booking as Booking)" :is-loading :error>
-        <FormSectionLayout title="Information de réservation" centered-title one-lined>
-            <InputText :input="inputs[0]" />
-            <InputText :input="inputs[1]" />
-            <InputDate :input="inputs[2]" :options="{
-                min: Helpers.FormatTool.Date.toFullYearMonthDay(new Date()),
-                max: Helpers.FormatTool.Date.toFullYearMonthDay(new Date(new Date().setFullYear(new Date().getFullYear() + 1)))
-            }" />
-            <InputRadio :input="inputs[3]" :options="[
-                { name: 'lunch', label: 'Midi', value: 'lunch' },
-                { name: 'diner', label: 'Soir', value: 'diner' }
-            ]" />
-            <InputSelect
-                :input="inputs[4]"
-                :options="Helpers.Datetime.getServiceTimes(
-                    inputs[2].value,
-                    inputs[3].value === 'lunch' ? establishmentInfo.servicesTime.lunch : establishmentInfo.servicesTime.diner,
-                    establishmentInfo.serviceDuration
-                )"
-            />
-            <InputNumberSelect :input="inputs[5]" />
-            <InputRadio :input="inputs[6]" :options="[
-                { name: 'yes', label: 'Oui', value: true },
-                { name: 'no', label: 'Non', value: false }
-            ]" />
-            <InputText v-if="inputs[6].value" :input="inputs[7]"/>
-        </FormSectionLayout>
-    </FormLayout>
+    <PageContent>
+        <TitleContent>
+            Modification de votre réservation
+        </TitleContent>
+        <FormLayout :inputs :submit-btn-label="'Enregistrer'" @on-submit="booking => onSubmit(booking as Booking)" :is-loading :error>
+            <FormSectionLayout title="Information de réservation">
+                <InputText :input="inputs[0]" />
+                <InputText :input="inputs[1]" />
+                <InputDate :input="inputs[2]" :options="{
+                    min: Helpers.FormatTool.Date.toFullYearMonthDay(new Date()),
+                    max: Helpers.FormatTool.Date.toFullYearMonthDay(new Date(new Date().setFullYear(new Date().getFullYear() + 1)))
+                }" />
+                <InputRadio :input="inputs[3]" :options="[
+                    { name: 'lunch', label: 'Midi', value: 'lunch' },
+                    { name: 'diner', label: 'Soir', value: 'diner' }
+                ]" />
+                <InputSelect
+                    :input="inputs[4]"
+                    :options="Helpers.Datetime.getServiceTimes(
+                        inputs[2].value,
+                        inputs[3].value === 'lunch' ? establishmentInfo.servicesTime.lunch : establishmentInfo.servicesTime.diner,
+                        establishmentInfo.serviceDuration
+                    )"
+                />
+                <InputNumberSelect :input="inputs[5]" />
+                <InputRadio :input="inputs[6]" :options="[
+                    { name: 'yes', label: 'Oui', value: true },
+                    { name: 'no', label: 'Non', value: false }
+                ]" />
+                <InputText v-if="inputs[6].value" :input="inputs[7]"/>
+            </FormSectionLayout>
+        </FormLayout>
+    </PageContent>
 </template>
