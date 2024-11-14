@@ -16,20 +16,21 @@ const { toastMessage } = useToast();
 <style lang="css" scoped>
 .toast-container {
     position: fixed;
-    top: calc(100vh - 50px);
-    background-color: #00000050;
+    bottom: 20px;
+    background-color: #000000CC;
     padding: 10px 30px;
     border-radius: 5px;
     color: white;
+    max-width: calc(100% - 20px);
 }
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 </style>

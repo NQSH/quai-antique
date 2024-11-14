@@ -43,7 +43,6 @@ form {
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    padding: 10px;
-    margin-bottom: 30px;
+    padding-inline: 10px;
 }
 </style>

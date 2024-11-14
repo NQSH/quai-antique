@@ -21,8 +21,8 @@ function onChangeClick(booking: Booking): void {
             <TitleContent>
                 Mes réservations
             </TitleContent>
-            <h2 class="text-title">Réservation à venir</h2>
             <div class="bookings-list" >
+                <h2 class="text-title">Réservation à venir</h2>
                 <BookingItem :booking v-for="booking in bookings" @on-change-click="booking=> onChangeClick(booking)"/>
             </div>
         </PageContent>
@@ -30,14 +30,9 @@ function onChangeClick(booking: Booking): void {
 </template>
 
 <style lang="css" scoped>
-h2 {
-    margin-bottom: 18px;
-}
-
 .bookings-list {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    margin-bottom: 30px;
+    gap: 18px;
 }
 </style>

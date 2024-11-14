@@ -1,3 +1,3 @@
 <template>
-    404
+    Oups ! La page n'a pas été trouvée ...
 </template>

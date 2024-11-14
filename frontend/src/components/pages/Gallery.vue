@@ -6,14 +6,12 @@ import Icon from './gallery/Icon.vue';
 import IconDesktop from './gallery/icons/IconDesktop.vue';
 import IconMobileRegular from './gallery/icons/IconMobile.vue';
 import IconSwitch from './gallery/icons/IconSwitch.vue';
-import ButtonDefault from '../inputs/ButtonDefault.vue';
 import ImageViewerModal from './gallery/ImageViewerModal.vue';
 import { useGallery, type Image } from '@/composables/useGallery';
-import { useRouter } from '@/composables/useRouter';
 import { useModal } from '@/composables/useModal';
+import ButtonBooking from '../inputs/ButtonBooking.vue';
 
 const { images } = useGallery();
-const { navigateTo } = useRouter();
 const { openModal } = useModal();
 
 const isSwitched = ref(false);
@@ -83,10 +81,8 @@ const isMaxScrolled = computed(() => {
                 </span>
             </div>
         </div>
+        <ButtonBooking />
     </PageContent>
-    <div id="button-cta">
-        <ButtonDefault label="Réserver une table" @on-click="navigateTo('booking')"/>
-    </div>
 </template>
 
 <style lang="css" scoped>
@@ -95,7 +91,6 @@ const isMaxScrolled = computed(() => {
     flex-direction: row;
     justify-content: center;
     gap: 40px;
-    margin-bottom: 18px;
 }
 
 #gallery {
@@ -278,9 +273,5 @@ const isMaxScrolled = computed(() => {
     #scroll-buttons {
         display: none;
     }
-}
-
-#button-cta {
-    padding: 30px 0px;
 }
 </style>

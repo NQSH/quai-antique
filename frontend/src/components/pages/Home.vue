@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { useRouter } from '@/composables/useRouter';
-import ButtonDefault from '../inputs/ButtonDefault.vue';
 import PageContent from '../PageContent.vue';
-
-const { navigateTo } = useRouter();
+import ButtonBooking from '../inputs/ButtonBooking.vue';
 
 </script>
 
@@ -11,7 +8,7 @@ const { navigateTo } = useRouter();
     <section id="hero">
         <img src="/img-hero.png" alt="Image du hero">
         <h1 class="text-header">Bienvenu au<br><span>Quai Antique</span></h1>
-        <ButtonDefault label="Réserver une table" @on-click="navigateTo('booking')"/>
+        <ButtonBooking />
         <a href="#/menu">Découvrir notre carte</a>
     </section>
     <PageContent>
@@ -66,10 +63,8 @@ const { navigateTo } = useRouter();
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore soluta recusandae culpa esse obcaecati ducimus, impedit odit, incidunt porro sunt placeat non architecto quia nostrum sequi ad. Consequuntur, distinctio amet.</p>
             </div>
         </article>
+        <ButtonBooking />
     </PageContent>
-    <div id="bottom-cta">
-        <ButtonDefault label="Réserver une table" @on-click="navigateTo('booking')"/>
-    </div>
 </template>
 
 <style lang="css" scoped>
@@ -105,10 +100,6 @@ const { navigateTo } = useRouter();
     & > a {
         color: var(--color-white);
     }
-}
-
-article {
-    padding-block: 40px;
 }
 
 #leader-article {
@@ -159,6 +150,7 @@ article {
     display: flex;
     flex-direction: row;
     gap: 18px;
+    padding-block: 40px;
 
     & > .article-image {
         min-width: 200px;
@@ -213,13 +205,6 @@ article {
     & > p {
         color: var(--color-tertiary-light);
     }
-}
-
-#bottom-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-block: 40px;
 }
 
 .diner-text {
