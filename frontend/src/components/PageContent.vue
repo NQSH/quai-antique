@@ -8,7 +8,6 @@
 section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 30px;
     width: 768px;
     max-width: min(calc(100% - 20px), 768px);

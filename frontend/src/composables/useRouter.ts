@@ -1,3 +1,4 @@
+import Account from "@/components/pages/Account.vue";
 import Booking from "@/components/pages/Booking.vue";
 import Bookings from "@/components/pages/Bookings.vue";
 import Gallery from "@/components/pages/Gallery.vue";
@@ -42,6 +43,11 @@ export function useRouter() {
             path: '/loginRedirection',
             component: LogInRedirection,
             title: 'Redirection de connexion'
+        },
+        {
+            path: '/account',
+            component: Account,
+            title: 'Mon compte'
         },
         {
             path: '/bookings',

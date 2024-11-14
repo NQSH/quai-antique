@@ -25,7 +25,7 @@ export function useUser() {
 type Data = {
     name: string
     surname: string
-    addres: string
+    address: string
     zip: string
     city: string
     email: string
