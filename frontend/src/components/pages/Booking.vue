@@ -26,8 +26,8 @@ const inputs = reactive([
     new Input('service', 'Service souhaité', 'lunch'),
     new Input('time', 'Heure d\'arrivée', '', Validators.NotEmpty()),
     new Input('numberOfPerson', 'Nombres de convives', user.value?.additional?.numberOfPerson),
-    new Input('hasAllergy', 'Avez-vous des allergies ?', user.value?.additional?.allergy),
-    new Input('allergies', 'Lesquelles ?', user.value?.additional?.allergies, Validators.Sentence()),
+    new Input('hasAllergy', 'Avez-vous des allergies ?', user.value?.additional?.hasAllergy),
+    new Input('allergies', 'Lesquelles ?', Helpers.FormatTool.Text.toSentenceCase(user.value?.additional?.allergies), Validators.Sentence()),
 ])
 
 const { post, isLoading, error } = usebooking();

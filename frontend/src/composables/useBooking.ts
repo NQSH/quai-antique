@@ -19,6 +19,8 @@ export function usebooking() {
     function handlePost(response: CustomResponse): void {
         if (response.statusOK) {
             popMessage('Votre demande de réservation a bien été effectuée');
+            console.log(response.data);
+
             bookings.value?.push(response.data as Booking);
             navigateTo('bookings');
         } else error.value = response.message;
@@ -76,7 +78,7 @@ export type Booking = {
     service: string
     time: string
     numberOfPerson: number
-    allergy: boolean
+    hasAllergy: boolean
     allergies: string
 }
 

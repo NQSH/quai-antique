@@ -25,7 +25,7 @@ const inputs = reactive([
     new Input('service', 'Service souhaité', props.booking.service),
     new Input('time', 'Heure d\'arrivée', props.booking.time, Validators.NotEmpty()),
     new Input('numberOfPerson', 'Nombres de convives', props.booking.numberOfPerson),
-    new Input('hasAllergy', 'Avez-vous des allergies ?', props.booking.allergy),
+    new Input('hasAllergy', 'Avez-vous des allergies ?', props.booking.hasAllergy),
     new Input('allergies', 'Lesquelles ?', props.booking.allergies, Validators.Sentence()),
 ])
 

@@ -8,29 +8,18 @@ const user = ref<Data | undefined>();
 
 export function useUser() {
 
-    const { authentication } = useAuthentication();
     const { popMessage } = useToast();
 
-    watch(authentication, () => {
-        if (authentication.value) {
-            const response = Services.User.get(authentication.value?.accessToken);
-
-            if (response.statusOK) {
-                const data = response.data as Data;
-                user.value = data;
-            }
-
-        } else {
-            user.value = undefined;
-        }
-    })
-
-    watch(user, () => {
-        if (user.value) popMessage(`Bonjour ${user.value && Helpers.FormatTool.Text.toSentenceCase(user.value?.name)} !`)
-    })
+    function get(accessToken: string): void {
+        const response = Services.User.get(accessToken);
+        const data = response.data as Data;
+        user.value = data;
+        popMessage(`Bonjour ${user.value && Helpers.FormatTool.Text.toSentenceCase(user.value?.name)} !`)
+    }
 
     return {
-        user
+        user,
+        get,
     }
 }
 
@@ -43,7 +32,7 @@ type Data = {
     email: string
     additional?: {
         numberOfPerson: number
-        allergy: boolean
+        hasAllergy: boolean
         allergies: string
     }
 }

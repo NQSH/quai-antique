@@ -15,7 +15,7 @@ const emits = defineEmits<{
     <div class="container">
         <p>{{ `Le ${new Date(props.booking.date).toLocaleDateString()} à ${props.booking.time.replace(':', 'h')}` }}</p>
         <p>{{ `Pour ${props.booking.numberOfPerson} personne${props.booking.numberOfPerson > 1 ? 's': ''}` }}</p>
-        <p>{{ `Allergies: ${props.booking.allergy ? props.booking.allergies : 'Aucune'}` }}</p>
+        <p>{{ `Allergies: ${props.booking.hasAllergy ? props.booking.allergies : 'Aucune'}` }}</p>
         <div class="buttons">
             <ButtonDefault label="Modifier" @on-click="emits('onChangeClick', booking)"/>
             <ButtonDefault label="Annuler" @on-click="console.log('Annuler')" dark/>

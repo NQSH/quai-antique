@@ -3,6 +3,7 @@ import Bookings from "@/components/pages/Bookings.vue";
 import Gallery from "@/components/pages/Gallery.vue";
 import Home from "@/components/pages/Home.vue";
 import LogIn from "@/components/pages/LogIn.vue";
+import LogInRedirection from "@/components/pages/LogInRedirection.vue";
 import Menu from "@/components/pages/Menu.vue";
 import NotFound from "@/components/pages/NotFound.vue";
 import { computed, onBeforeMount, onBeforeUnmount, ref } from "vue";
@@ -38,10 +39,15 @@ export function useRouter() {
             title: 'Connexion'
         },
         {
+            path: '/loginRedirection',
+            component: LogInRedirection,
+            title: 'Redirection de connexion'
+        },
+        {
             path: '/bookings',
             component: Bookings,
             title: 'Mes réservations'
-        }
+        },
     ]
 
     function update() {

@@ -13,7 +13,7 @@ function get(accessToken: string): CustomResponse {
                 service: 'diner',
                 time: '19:15',
                 numberOfPerson: 3,
-                allergy: true,
+                hasAllergy: true,
                 allergies: 'Fruits de mer'
             }
         ])
