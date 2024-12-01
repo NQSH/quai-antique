@@ -1,4 +1,4 @@
-interface Validator {
+export interface Validator {
     validate(value: any): boolean
     error: string
 }

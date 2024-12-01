@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
-import FormLayout from '../FormLayout.vue';
+import FormLayout, { type FormInputs } from '../FormLayout.vue';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
 import { Input } from '../inputs/classes/_input';
@@ -16,10 +16,10 @@ type Data = {
     password: string
 }
 
-const inputs = reactive([
-    new Input('email', 'Adresse email', '', Validators.Email()),
-    new Input('password', 'Mot de passe', ''),
-])
+const inputs = reactive<FormInputs>({
+    'email': new Input('email', 'Adresse email', '', Validators.Email()),
+    'password': new Input('password', 'Mot de passe', ''),
+})
 
 const { logIn, authentication, error, isLoading } = useAuthentication();
 const { navigateFrom } = useRouter();
@@ -41,8 +41,8 @@ watch(authentication, () => {
         </TitleContent>
         <FormLayout :inputs :submit-btn-label="'Se connecter'" @on-submit="(data: object) => onSubmit(data as Data)" :is-loading :error>
             <FormSectionLayout title="Identifiants" :centered-title="true" :one-lined="true">
-                <InputText :input="inputs[0]" :options="{ type: 'email', disabled: isLoading }"/>
-                <InputText :input="inputs[1]" :options="{ type: 'password', disabled: isLoading }"/>
+                <InputText :input="inputs['email']" :options="{ type: 'email', disabled: isLoading }"/>
+                <InputText :input="inputs['password']" :options="{ type: 'password', disabled: isLoading }"/>
             </FormSectionLayout>
         </FormLayout>
         <Link href="#/signin" label="Devenir client"/>

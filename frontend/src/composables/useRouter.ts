@@ -7,6 +7,7 @@ import LogIn from "@/components/pages/LogIn.vue";
 import LogInRedirection from "@/components/pages/LogInRedirection.vue";
 import Menu from "@/components/pages/Menu.vue";
 import NotFound from "@/components/pages/NotFound.vue";
+import SignIn from "@/components/pages/SignIn.vue";
 import { computed, onBeforeMount, onBeforeUnmount, ref } from "vue";
 
 const currentPath = ref('');
@@ -43,6 +44,11 @@ export function useRouter() {
             path: '/loginRedirection',
             component: LogInRedirection,
             title: 'Redirection de connexion'
+        },
+        {
+            path: '/signin',
+            component: SignIn,
+            title: 'Inscription'
         },
         {
             path: '/account',

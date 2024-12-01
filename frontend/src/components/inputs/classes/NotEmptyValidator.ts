@@ -1,7 +1,7 @@
-import { InputValidator } from "./_inputValidator";
+import { InputValidator, type Validator } from "./_inputValidator";
 
 export class NotEmptyValidator extends InputValidator {
-    constructor() {
+    constructor(validators?: Validator[]) {
         super([
             {
                 validate: (value: string) => {
@@ -9,6 +9,6 @@ export class NotEmptyValidator extends InputValidator {
                 },
                 error: 'Ne peut être vide'
             },
-        ])
+        ].concat(validators ?? []))
     }
 }

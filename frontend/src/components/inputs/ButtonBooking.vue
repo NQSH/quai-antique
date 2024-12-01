@@ -16,4 +16,4 @@ const { navigateTo } = useRouter();
     display: flex;
     justify-content: center;
 }
-</style>
+</style>    

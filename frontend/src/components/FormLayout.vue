@@ -3,8 +3,12 @@ import type { Reactive } from 'vue';
 import ButtonDefault from './inputs/ButtonDefault.vue';
 import type { Input } from './inputs/classes/_input';
 
+export type FormInputs = {
+    [key: string]: Input
+}
+
 const props = defineProps<{
-    inputs: Reactive<Input[]>
+    inputs: Reactive<FormInputs>
     submitBtnLabel: string
     isLoading?: boolean
     error?: string
@@ -16,11 +20,12 @@ const emits = defineEmits<{
 
 function onBeforeSubmit(): void {
     let isFormValid = true;
-    props.inputs.forEach(input => {
+    Object.keys(props.inputs).forEach(key => {
+        const input = props.inputs[key];
         if(input.validator && !input.validator.isValid(input.value)) isFormValid = false;
     })
     if(isFormValid) {
-        emits('onSubmit', Object.fromEntries(props.inputs.map(input => [input.name, input.value])));
+        emits('onSubmit', Object.fromEntries(Object.entries(props.inputs).map(([key, input]) => [key, input.value])));
     }
 }
 </script>

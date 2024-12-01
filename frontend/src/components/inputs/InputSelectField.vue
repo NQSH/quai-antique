@@ -5,16 +5,8 @@ import InputLayout from './InputLayout.vue';
 
 const props = defineProps<{
     input: Reactive<Input>
-    options: string[]
 }>()
 
-watch(() => props.options, () => {
-    props.input.value = props.options[0];
-})
-
-onMounted(() => {
-    if(props.input.value === '') props.input.value = props.options[0];
-})
 </script>
 
 <template>
@@ -22,7 +14,7 @@ onMounted(() => {
         <div class="input-container">
             <label :for="props.input.name">{{ props.input.label }}</label>
             <select v-model="props.input.value" :name="props.input.name">
-                <option v-for="option in options" :value="option">{{ option.split(':').join(' : ') }}</option>
+                <slot />
             </select>
         </div>
     </InputLayout>
