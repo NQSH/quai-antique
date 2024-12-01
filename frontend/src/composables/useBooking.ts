@@ -53,6 +53,11 @@ export function usebooking() {
         Services.Booking.put(handlePut, booking);
     }
 
+    function remove(booking: Booking): void {
+        bookings.value = bookings.value?.filter(currentBooking => currentBooking.id !== booking.id);
+        popMessage('Votre réservation a bien été supprimée.')
+    }
+
     watch(authentication, () => {
         if (!bookings.value && authentication.value) {
 
@@ -69,6 +74,7 @@ export function usebooking() {
         error,
         post,
         put,
+        remove,
     }
 }
 

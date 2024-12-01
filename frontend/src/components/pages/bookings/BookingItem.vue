@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import ButtonDefault from '@/components/inputs/ButtonDefault.vue';
 import type { Booking } from '@/composables/useBooking';
+import { useModal } from '@/composables/useModal';
+import BookingItemChangeModal from './BookingItemChangeModal.vue';
+import BookingItemCancelModal from './BookingItemCancelModal.vue';
+
+const { openModal } = useModal();
 
 const props = defineProps<{
     booking: Booking
 }>()
 
-const emits = defineEmits<{
-    (event: 'onChangeClick', booking: Booking): void
-}>()
+function onChangeClick(): void {
+    openModal(BookingItemChangeModal, { booking: props.booking })
+}
+
+function onCancelClick(): void {
+    openModal(BookingItemCancelModal, { booking: props.booking })
+}
+
 </script>
 
 <template>
@@ -17,8 +27,8 @@ const emits = defineEmits<{
         <p>{{ `Pour ${props.booking.numberOfPerson} personne${props.booking.numberOfPerson > 1 ? 's': ''}` }}</p>
         <p>{{ `Allergies: ${props.booking.hasAllergy ? props.booking.allergies : 'Aucune'}` }}</p>
         <div class="buttons">
-            <ButtonDefault label="Modifier" @on-click="emits('onChangeClick', booking)"/>
-            <ButtonDefault label="Annuler" @on-click="console.log('Annuler')" dark/>
+            <ButtonDefault label="Modifier" @on-click="onChangeClick"/>
+            <ButtonDefault label="Annuler" @on-click="onCancelClick" dark/>
         </div>
     </div>
 </template>
