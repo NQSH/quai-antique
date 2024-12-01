@@ -7,9 +7,9 @@ export enum Roles { 'USER', 'ADMIN' }
 
 const authentication = ref<Data>();
 const isLoading = ref(false);
-const error = ref();
 
 export function useAuthentication() {
+    const error = ref();
     const { popMessage } = useToast();
 
 
