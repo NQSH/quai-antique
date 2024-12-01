@@ -50,4 +50,8 @@ form {
     gap: 30px;
     padding-inline: 10px;
 }
+
+.error {
+    color: var(--color-danger);
+}
 </style>
