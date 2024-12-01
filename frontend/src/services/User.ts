@@ -1,4 +1,6 @@
+import type { NewUser } from "@/composables/useUser";
 import CustomResponse from "./classes/CustomResponse";
+import { withDelayRequest } from "./_withDelayRequest";
 
 function get(accessToken: string): CustomResponse {
     if (accessToken === 'adminAccessToken') {
@@ -27,6 +29,15 @@ function get(accessToken: string): CustomResponse {
     } else return new CustomResponse(false, undefined, 'Une erreur est survenue.')
 }
 
+function post(payload: NewUser): CustomResponse {
+    if (payload.email === 'admin@quai-antique.fr' || payload.email === 'john.doe@email.fr') {
+        return new CustomResponse(false, undefined, 'L\'adresse email est déjà utilisée.');
+    } else {
+        return new CustomResponse(true);
+    }
+}
+
 export default {
     get,
+    post: (callback: Function, payload: NewUser) => withDelayRequest(post, callback, payload)
 }
