@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { usebooking, type Booking } from '@/composables/useBooking';
+import { useBooking } from '@/composables/useBooking';
 import PageContent from '../PageContent.vue';
 import TitleContent from '../TitleContent.vue';
 import ProtectedContent from '../ProtectedContent.vue';
 import BookingItem from './bookings/BookingItem.vue';
-import { useModal } from '@/composables/useModal';
 
-const { bookings } = usebooking();
-const { openModal } = useModal();
+const { bookings } = useBooking();
 
 </script>
 

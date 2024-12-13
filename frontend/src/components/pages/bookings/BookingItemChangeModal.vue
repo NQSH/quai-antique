@@ -12,7 +12,7 @@ import InputSelectOption from '@/components/inputs/InputSelectOption.vue';
 import InputText from '@/components/inputs/InputText.vue';
 import PageContent from '@/components/PageContent.vue';
 import TitleContent from '@/components/TitleContent.vue';
-import { usebooking, type Booking } from '@/composables/useBooking';
+import { useBooking, type Booking } from '@/composables/useBooking';
 import { useEstablishment } from '@/composables/useEstablishment';
 import { Helpers } from '@/helpers/_helpers';
 import { computed, reactive, watch } from 'vue';
@@ -32,13 +32,13 @@ const inputs = reactive<FormInputs>({
     'allergies': new Input('allergies', 'Lesquelles ?', props.booking.allergies, Validators.Sentence()),
 })
 
-const { put, isLoading, error } = usebooking();
+const { put, isLoading, error } = useBooking();
 const { establishmentInfo } = useEstablishment();
 
 
 const servicesTimes = computed(() => {
-    const lunch = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.servicesTime.lunch, establishmentInfo.serviceDuration);
-    const diner = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.servicesTime.diner, establishmentInfo.serviceDuration);
+    const lunch = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.value.servicesTime.lunch, establishmentInfo.value.serviceDuration);
+    const diner = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.value.servicesTime.diner, establishmentInfo.value.serviceDuration);
     return {
         lunch,
         diner

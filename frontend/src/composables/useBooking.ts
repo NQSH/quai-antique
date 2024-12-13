@@ -10,7 +10,7 @@ const bookings = ref<Data>();
 const isLoading = ref<boolean>(false);
 const error = ref<string | undefined>();
 
-export function usebooking() {
+export function useBooking() {
     const { authentication } = useAuthentication();
     const { popMessage } = useToast();
     const { navigateTo } = useRouter();

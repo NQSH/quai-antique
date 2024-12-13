@@ -13,17 +13,17 @@ import InputRadioField from '../inputs/InputRadioField.vue';
 import InputSelectField from '../inputs/InputSelectField.vue';
 import InputNumberSelect from '../inputs/InputNumberSelect.vue';
 import { useUser } from '@/composables/useUser';
-import { usebooking, type Booking } from '@/composables/useBooking';
+import { useBooking, type Booking } from '@/composables/useBooking';
 import ProtectedContent from '../ProtectedContent.vue';
 import { useEstablishment } from '@/composables/useEstablishment';
 import InputRadioOption from '../inputs/InputRadioOption.vue';
 import InputSelectOption from '../inputs/InputSelectOption.vue';
 
 const { user } = useUser();
-const { post, isLoading, error } = usebooking();
+const { post, isLoading, error } = useBooking();
 const { establishmentInfo } = useEstablishment();
 
-const initialBookingOptions = Helpers.Booking.getInitialBookingOptions(establishmentInfo);
+const initialBookingOptions = Helpers.Booking.getInitialBookingOptions(establishmentInfo.value);
 
 const inputs = reactive<FormInputs>({
     'name': new Input('name', 'Votre prénom', Helpers.FormatTool.Text.toSentenceCase(user.value?.name), Validators.Name()),
@@ -37,8 +37,8 @@ const inputs = reactive<FormInputs>({
 })
 
 const servicesTimes = computed(() => {
-    const lunch = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.servicesTime.lunch, establishmentInfo.serviceDuration);
-    const diner = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.servicesTime.diner, establishmentInfo.serviceDuration);
+    const lunch = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.value?.servicesTime.lunch || '12:00', establishmentInfo.value?.serviceDuration || 2);
+    const diner = Helpers.Booking.getServiceTimes(inputs['date'].value, establishmentInfo.value?.servicesTime.diner || '19:00', establishmentInfo.value?.serviceDuration || 2);
     return {
         lunch,
         diner

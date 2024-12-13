@@ -2,10 +2,10 @@
 import ButtonDefault from '@/components/inputs/ButtonDefault.vue';
 import PageContent from '@/components/PageContent.vue';
 import TitleContent from '@/components/TitleContent.vue';
-import { usebooking, type Booking } from '@/composables/useBooking';
+import { useBooking, type Booking } from '@/composables/useBooking';
 import { useModal } from '@/composables/useModal';
 
-const { remove } = usebooking();
+const { remove } = useBooking();
 const { closeModal } = useModal();
 
 const props = defineProps<{
