@@ -14,7 +14,19 @@ const Date = {
     toFullYearMonthDay
 }
 
+function phoneNumberFR(phoneNumber: string): string {
+    return phoneNumber
+        .replace(/^(\+33)/, "0")
+        .replace(/(\d{2})(?=\d)/g, "$1 ")
+        .trim();
+}
+
+const PhoneNumber = {
+    phoneNumberFR,
+}
+
 export const FormatTool = {
     Text,
-    Date
+    Date,
+    PhoneNumber,
 }

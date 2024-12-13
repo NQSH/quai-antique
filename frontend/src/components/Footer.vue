@@ -1,19 +1,22 @@
 <script setup lang="ts">
+import { useEstablishment } from '@/composables/useEstablishment';
+import ButtonAdminChange from './ButtonAdminChange.vue';
 import IconEmail from './footer/IconEmail.vue';
 import IconPhone from './footer/IconPhone.vue';
+import { Helpers } from '@/helpers/_helpers';
+import { useModal } from '@/composables/useModal';
+import EstablishmentInfoChangeModal from './footer/EstablishmentInfoChangeModal.vue';
 
 
 enum daysOfWeek {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"};
 
-const schedules = [
-    null,
-    [12, 19],
-    [12, 19],
-    [12, 19],
-    [12, 19],
-    [12, 19],
-    [12, 19]
-]
+const { establishmentInfo } = useEstablishment();
+const { openModal } = useModal();
+
+function onAdminBtnClick() {
+    openModal(EstablishmentInfoChangeModal, {});
+}
+
 </script>
 
 <template>
@@ -30,7 +33,7 @@ const schedules = [
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(hours, index) in schedules">
+                <tr v-for="(hours, index) in establishmentInfo?.schedules">
                     <th scope="row">{{ daysOfWeek[index] }}</th>
                     <td>{{ hours ? `${hours[0]}h-${hours[0] + 2}h / ${hours[1]}h-${hours[1] + 2}h` : 'Fermé' }}</td>
                 </tr>
@@ -40,23 +43,25 @@ const schedules = [
     <section>
         <h1 class="text-title">Nous trouver</h1>
         <address>
-            123 Avenue du Grand Port
+            {{ establishmentInfo?.location.address }}
             <br>
-            73100 Aix-les-Bains
+            {{ `${establishmentInfo?.location.zipCode} ${establishmentInfo?.location.city}` }}
         </address>
     </section>
     <section>
         <h1 class="text-title">Nous contacter</h1>
         <address>
-            <a class="contact-link" href="tel:+33612345678"><IconPhone class="icon" /><p>06 12 34 56 78</p></a>
-            <a class="contact-link" href="mailto:contact@quai-antique.fr"><IconEmail class="icon" /><p>contact@quai-antique.fr</p></a>
+            <a class="contact-link" :href="`tel:${establishmentInfo?.contact.phone}`"><IconPhone class="icon" /><p>{{ Helpers.FormatTool.PhoneNumber.phoneNumberFR(establishmentInfo?.contact.phone || '') }}</p></a>
+            <a class="contact-link" :href="`mailto:${establishmentInfo?.contact.email}`"><IconEmail class="icon" /><p>{{ establishmentInfo?.contact.email }}</p></a>
         </address>
     </section>
+    <ButtonAdminChange class="admin-button" @on-click="onAdminBtnClick"/>
 </footer>
 </template>
 
 <style lang="css" scoped>
 footer {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -104,6 +109,13 @@ th {
 td {
     text-align: left;
     padding-left: 30px;
+}
+
+.admin-button {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
 }
 
 @media (max-width: 992px) {

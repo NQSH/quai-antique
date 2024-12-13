@@ -1,3 +1,4 @@
+import { Roles } from "@/composables/useAuthentication";
 import { withDelayRequest } from "./_withDelayRequest";
 import CustomResponse from "./classes/CustomResponse";
 
@@ -7,13 +8,13 @@ function logIn(payload: { email: string, password: string }): CustomResponse {
         document.cookie = "refreshToken=" + 'adminRefreshToken' + new Date().getDate();
         return new CustomResponse(true, {
             accessToken: 'adminAccessToken',
-            role: 'ADMIN'
+            role: Roles.ADMIN
         })
     } else if (email === 'john.doe@email.fr' && password === '1234') {
         document.cookie = "refreshToken=" + 'clientRefreshToken' + new Date().getDate();
         return new CustomResponse(true, {
             accessToken: 'clientAccessToken',
-            role: 'USER'
+            role: Roles.USER
         })
     } else {
         return new CustomResponse(false, undefined, "L'adresse email ou le mot de passe est incorrect.")
@@ -38,9 +39,9 @@ function signOut(): void {
 function refreshToken(payload: { token: string }): CustomResponse {
     const { token } = payload;
     if (token === 'adminRefreshToken' + new Date().getDate()) {
-        return new CustomResponse(true, { accessToken: 'adminAccessToken', role: 'ADMIN' });
+        return new CustomResponse(true, { accessToken: 'adminAccessToken', role: Roles.ADMIN });
     } else if (token === 'clientRefreshToken' + new Date().getDate()) {
-        return new CustomResponse(true, { accessToken: 'clientAccessToken', role: 'USER' });
+        return new CustomResponse(true, { accessToken: 'clientAccessToken', role: Roles.USER });
     } else {
         document.cookie = "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         return new CustomResponse(false, undefined, "La session a expiré.")
