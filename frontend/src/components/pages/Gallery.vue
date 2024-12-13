@@ -10,6 +10,8 @@ import ImageViewerModal from './gallery/ImageViewerModal.vue';
 import { useGallery, type Image } from '@/composables/useGallery';
 import { useModal } from '@/composables/useModal';
 import ButtonBooking from '../inputs/ButtonBooking.vue';
+import ButtonAdminAdd from '../ButtonAdminAdd.vue';
+import ImageAdderModal from './gallery/ImageAdderModal.vue';
 
 const { images } = useGallery();
 const { openModal } = useModal();
@@ -49,12 +51,17 @@ const isMaxScrolled = computed(() => {
     return scrollIndex.value >= maxScrollSize;
 })
 
+function onAddClick(): void {
+    openModal(ImageAdderModal, {});
+}
+
 </script>
 
 <template>
     <PageContent>
         <TitleContent>
             Galerie
+            <ButtonAdminAdd @on-click="onAddClick"/>
         </TitleContent>
         <div id="switch-buttons">
             <Icon :isActive="!isSwitched" id="icon-mobile" @click="onSwitchClick(false)"><IconMobileRegular /></Icon>
