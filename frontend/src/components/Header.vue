@@ -5,6 +5,8 @@ import IconAccount from './header/IconAccount.vue';
 import { useAuthentication } from '@/composables/useAuthentication';
 import NavLink from './header/NavLink.vue';
 import { useUser } from '@/composables/useUser';
+import AdminContent from './AdminContent.vue';
+import ClientContent from './ClientContent.vue';
 
 const { authentication, isLoading, logOut } = useAuthentication();
 const { user } = useUser();
@@ -69,7 +71,12 @@ provide('hideNav', hideNav);
     </nav>
     <nav :class="accountNavStyle" v-if="authentication">
         <NavLink name="account" label="Mon compte" />
-        <NavLink name="bookings" label="Mes réservations" />
+        <AdminContent>
+            <NavLink name="bookings" label="Voir les réservations" />
+        </AdminContent>
+        <ClientContent>
+            <NavLink name="bookings" label="Mes réservations" />
+        </ClientContent>
         <span @click="logOut">
             <NavLink name="" label="Se déconnecter" />
         </span>
